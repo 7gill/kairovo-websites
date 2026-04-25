@@ -28,7 +28,7 @@ Four apps, four distinct colours. Settled after Claude Design session.
 
 | App | Name | Hex | Character |
 |---|---|---|---|
-| ScoreSifter | Teal | `#1D9E75` | Utility, done, resolved |
+| ScoreSifter | Forest green | `#3F7A54` | Utility, done, resolved |
 | Recital Atlas | Wine | `#7A3A46` | Performance, culture, warmth |
 | AriaDesk | Slate | `#3D5A6C` | Professional, clinical, organised |
 | Vocemetry | Violet | `#4A1A8F` | Technical, scientific, precise |
@@ -53,7 +53,7 @@ Four apps, four distinct colours. Settled after Claude Design session.
 ```
 --ss-900: #062E22
 --ss-800: #0D6E4A
---ss-700: #1D9E75   ← primary brand
+--ss-700: #3F7A54   ← primary brand
 --ss-600: #2DCE96
 --ss-500: #5DCAA5
 --ss-400: #A0FFE0
@@ -159,7 +159,7 @@ Reference files: `kairovo v2/` folder (Desktop).
 
 ### Per-app accent activation
 ```css
-html[data-app="scoresifter"]  { --accent: #1D9E75; }
+html[data-app="scoresifter"]  { --accent: #3F7A54; }
 html[data-app="recitalatlas"] { --accent: #7A3A46; }
 html[data-app="ariadesk"]     { --accent: #3D5A6C; }
 html[data-app="vocemetry"]    { --accent: #4A1A8F; }

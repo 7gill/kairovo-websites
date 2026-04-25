@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en" data-app="scoresifter">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guide — ScoreSifter</title>
+<meta name="description" content="ScoreSifter guide — getting started, how the catalogue works, templates, forScore integration, and undo.">
+<link rel="icon" type="image/svg+xml" href="images/app-icon.svg">
+<link rel="apple-touch-icon" href="images/app-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../design-system/kairovo-system.css">
+<link rel="stylesheet" href="../design-system/scoresifter.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <div class="brand-group">
+      <a href="index.html" class="brand">
+        <img src="images/app-icon.svg" alt="" width="22" height="22" style="border-radius:5px">
+        <span class="brand__name">ScoreSifter</span>
+      </a>
+      <a class="brand__back" href="https://kairovo.com">Kairovo ↩</a>
+    </div>
+    <nav class="nav">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how">How it works</a>
+      <a href="#forscore">forScore</a>
+      <a href="guide.html" style="color:var(--ink);font-weight:500">Guide</a>
+      <a href="index.html#download">Download</a>
+    </nav>
+    <div class="topbar__right">
+      <span class="topbar__live"><span class="dot"></span>v1.0 — free</span>
+    </div>
+  </div>
+</header>
+
+<div class="guide-shell">
+  <!-- SIDEBAR NAV -->
+  <aside class="guide-nav">
+    <div class="guide-nav__section">
+      <p class="guide-nav__label">Guide</p>
+      <ul class="guide-nav__links">
+        <li><a href="#getting-started">Getting started</a></li>
+        <li><a href="#catalogue">How the catalogue works</a></li>
+        <li><a href="#templates">Templates</a></li>
+        <li><a href="#forscore">forScore integration</a></li>
+        <li><a href="#undo">Undo</a></li>
+      </ul>
+    </div>
+    <div class="guide-nav__section">
+      <p class="guide-nav__label">Support</p>
+      <ul class="guide-nav__links">
+        <li><a href="mailto:hello@kairovo.com">Contact</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- BODY -->
+  <main class="guide-body">
+    <span class="mono" style="display:block;margin-bottom:16px">KA-101 / ScoreSifter · Guide</span>
+    <h1>Using ScoreSifter</h1>
+    <p class="lede">Everything you need to get from a messy folder to a clean, forScore-ready library.</p>
+
+    <!-- GETTING STARTED -->
+    <section class="guide-section" id="getting-started">
+      <p class="guide-section__no">§ 01</p>
+      <h2>Getting started</h2>
+      <p>Download ScoreSifter for your platform and open it. No account, no licence key, no internet connection required.</p>
+      <p>On first launch, you'll see the onboarding screen. It walks you through pointing the app at your score folder — a folder of PDFs on your computer. This can be any folder; ScoreSifter doesn't copy or move your files, it just reads and renames them in place.</p>
+
+      <h3>System requirements</h3>
+      <ul>
+        <li><strong>macOS</strong> — 11.0 (Big Sur) or later, Apple Silicon or Intel</li>
+        <li><strong>Windows</strong> — Windows 10 or 11, x64</li>
+        <li><strong>Linux</strong> — AppImage, tested on Ubuntu 22.04 and Fedora 38</li>
+      </ul>
+
+      <h3>Opening a folder</h3>
+      <ol>
+        <li>Click <strong>Open Folder</strong> or drag a folder onto the app window</li>
+        <li>ScoreSifter scans every PDF in the folder (and subfolders)</li>
+        <li>Each file is parsed and matched against the catalogue</li>
+        <li>Results appear in three tabs: <strong>To Review</strong>, <strong>Done</strong>, and <strong>All</strong></li>
+      </ol>
+
+      <div class="callout">
+        <strong>Good to know:</strong> ScoreSifter never changes a file until you explicitly commit a rename. Everything up to that point is preview only.
+      </div>
+
+      <h3>The three tabs</h3>
+      <ul>
+        <li><strong>To Review</strong> — files that need your attention. Low-confidence matches, unmatched files, or anything that looks wrong.</li>
+        <li><strong>Done</strong> — files you've reviewed and approved. These are queued for renaming when you click Rename Selected.</li>
+        <li><strong>All</strong> — every file ScoreSifter found, regardless of status.</li>
+      </ul>
+
+      <h3>Row controls</h3>
+      <p>Each file row has three icon buttons on the right, visible on hover:</p>
+      <table class="meta-table">
+        <thead>
+          <tr>
+            <th>Icon</th>
+            <th>What it does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🔍 Search</td>
+            <td>Opens a manual lookup for that file. Use this when auto-lookup didn't find a match, or when you want to search for a different result. Results come from the local catalogue first, then MusicBrainz if nothing is found.</td>
+          </tr>
+          <tr>
+            <td>👁 Eye</td>
+            <td>Shows the original filename as it was before ScoreSifter parsed it. Useful when you want to double-check what the file was called before any cleanup.</td>
+          </tr>
+          <tr>
+            <td>↺ Reset</td>
+            <td>Clears the proposed rename for that file and restores it to its auto-detected state. Use this if you've edited a row and want to start over.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- CATALOGUE -->
+    <section class="guide-section" id="catalogue">
+      <p class="guide-section__no">§ 02</p>
+      <h2>How the catalogue works</h2>
+      <p>ScoreSifter ships with KairovoData — a hand-curated database of around 43,000 works covering art song, opera arias, lieder and musical theatre. The database is embedded in the app and works entirely offline.</p>
+
+      <h3>Confidence levels</h3>
+      <p>Each file gets a confidence rating based on how cleanly ScoreSifter could match it:</p>
+      <ul>
+        <li><strong>High (green)</strong> — strong match from the catalogue. Title and composer extracted cleanly, verified against KairovoData.</li>
+        <li><strong>Medium (amber)</strong> — probable match, but something was ambiguous. Worth a quick check.</li>
+        <li><strong>Low (grey)</strong> — ScoreSifter made a guess. Review these manually before committing.</li>
+      </ul>
+      <p>Confidence reflects the quality of the filename parse — not whether the proposed rename looks right to you. Always review low-confidence files before committing.</p>
+
+      <h3>MusicBrainz fallback</h3>
+      <p>When a file doesn't match anything in the local catalogue, ScoreSifter can optionally query <a href="https://musicbrainz.org" target="_blank" rel="noopener" style="color:var(--accent)">MusicBrainz</a> — a public, community-maintained music database. This sends only the title and composer name, nothing else.</p>
+      <p>MusicBrainz lookups are marked separately so you can tell which results came from the local catalogue and which came from online. You still review and approve each one before it's used.</p>
+
+      <h3>Manual entry</h3>
+      <p>If nothing matches — catalogue or MusicBrainz — you fill in the fields yourself. Type the title, composer, key, and work directly into the file row. ScoreSifter renames from your input, the same as any other file.</p>
+    </section>
+
+    <!-- TEMPLATES -->
+    <section class="guide-section" id="templates">
+      <p class="guide-section__no">§ 03</p>
+      <h2>Templates</h2>
+      <p>Templates control how the renamed filename is constructed. ScoreSifter comes with five presets and lets you write your own.</p>
+
+      <h3>Available tokens</h3>
+      <div class="token-grid">
+        <div class="token">
+          <div class="token__name">{title}</div>
+          <div class="token__desc">The work title — e.g. "Die Forelle"</div>
+          <div class="token__req">Required</div>
+        </div>
+        <div class="token">
+          <div class="token__name">{composer}</div>
+          <div class="token__desc">Composer surname — e.g. "Schubert"</div>
+          <div class="token__req">Optional</div>
+        </div>
+        <div class="token">
+          <div class="token__name">{key}</div>
+          <div class="token__desc">Key signature — e.g. "D", "A♭", "c"</div>
+          <div class="token__req">Strongly recommended</div>
+        </div>
+        <div class="token">
+          <div class="token__name">{work}</div>
+          <div class="token__desc">Parent opera or show — e.g. "Rigoletto"</div>
+          <div class="token__req">Optional — use with [? … ?]</div>
+        </div>
+      </div>
+
+      <h3>Optional segments</h3>
+      <p>Wrap any part of a template in <code style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent)">[? … ?]</code> to make it conditional — it only appears if the token inside has a value.</p>
+      <p>For example: <code style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink-2)">{title} – {composer}[? ({work})?] – [{key}]</code></p>
+      <p>If the piece has a parent work, you get: <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink)">Dido's Lament – Purcell (Dido and Aeneas) – [g].pdf</span></p>
+      <p>If it doesn't, you get: <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink)">Die Forelle – Schubert – [D].pdf</span></p>
+
+      <div class="callout callout--accent">
+        <strong>Why include the key?</strong> When the same piece exists in multiple keys in your library, the key in the filename is the only way to tell them apart at a glance — and it's what ScoreSifter uses to suggest the right file when building a Recital Atlas program.
+      </div>
+    </section>
+
+    <!-- FORSCORE -->
+    <section class="guide-section" id="forscore">
+      <p class="guide-section__no">§ 04</p>
+      <h2>forScore integration</h2>
+      <p>ScoreSifter doesn't connect to forScore directly — it works on your PDF files before they ever reach the iPad. By the time you import your scores into forScore, all the metadata is already in the files, waiting to be fetched.</p>
+
+      <h3>What gets written into each PDF</h3>
+      <p>After a rename, ScoreSifter writes metadata into each PDF using the standard fields forScore reads:</p>
+
+      <table class="meta-table">
+        <thead>
+          <tr>
+            <th>PDF field</th>
+            <th>forScore reads as</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Title</td>
+            <td>Title</td>
+            <td>La donna è mobile</td>
+          </tr>
+          <tr>
+            <td>Author</td>
+            <td>Composer</td>
+            <td>Giuseppe Verdi</td>
+          </tr>
+          <tr>
+            <td>Keywords</td>
+            <td>Key signature + tags</td>
+            <td>keysf:2, keymi:0, Rigoletto</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Key signatures use the MIDI standard — <code style="font-family:'JetBrains Mono',monospace;font-size:13px">keysf</code> for the number of sharps or flats, <code style="font-family:'JetBrains Mono',monospace;font-size:13px">keymi</code> for major (0) or minor (1). This is the same format defined in the <a href="https://forscore.co/developers-pdf-metadata/" target="_blank" rel="noopener" style="color:var(--accent)">forScore PDF metadata spec</a>.</p>
+
+      <h3>Step by step: getting metadata into forScore</h3>
+      <ol class="step-list">
+        <li>
+          <span class="step-list__no">01</span>
+          <div class="step-list__body">
+            <strong>Rename your files with ScoreSifter</strong>
+            Scan your folder, review the proposed renames, and commit. ScoreSifter renames the files and writes the metadata in one step.
+          </div>
+        </li>
+        <li>
+          <span class="step-list__no">02</span>
+          <div class="step-list__body">
+            <strong>Import the files into forScore</strong>
+            Add your renamed PDFs to forScore using any method you prefer — AirDrop, Files app, iCloud Drive, or the forScore file import. The files now contain embedded metadata.
+          </div>
+        </li>
+        <li>
+          <span class="step-list__no">03</span>
+          <div class="step-list__body">
+            <strong>Fetch the metadata in forScore</strong>
+            Open any score in forScore. Tap the menu button (the three dots or the title bar, depending on your forScore version) and choose <strong>Fetch</strong>. forScore reads the embedded PDF metadata and populates Title, Composer, and Key immediately.
+          </div>
+        </li>
+        <li>
+          <span class="step-list__no">04</span>
+          <div class="step-list__body">
+            <strong>Or, turn on automatic fetching</strong>
+            To have forScore fetch metadata automatically for every new file you add, go to <strong>Settings → Score Library → Automatic Metadata</strong> and enable <strong>Automatic fetching for new files</strong>. Once this is on, you never need to tap Fetch manually — import and it's done.
+          </div>
+        </li>
+      </ol>
+
+      <div class="callout">
+        <strong>If Fetch doesn't seem to work:</strong> Check that the file was actually renamed and committed in ScoreSifter (not just previewed). Files in the "To Review" tab haven't been renamed yet — move them to Done and commit first.
+      </div>
+
+      <h3>What forScore does with the work field</h3>
+      <p>forScore doesn't have a dedicated "work" or "opera" field in its metadata panel — it maps the PDF Subject field to Genre. ScoreSifter writes the parent work (e.g. "Rigoletto") as a keyword tag instead, which appears in forScore's tags system. You can use these tags to group all arias from the same opera.</p>
+
+      <h3>Compatible readers</h3>
+      <p>The metadata ScoreSifter writes uses standard PDF fields — not forScore-specific formats. It also works with MuseScore, MobileSheets, and other music PDF readers that parse standard PDF metadata.</p>
+    </section>
+
+    <!-- UNDO -->
+    <section class="guide-section" id="undo">
+      <p class="guide-section__no">§ 05</p>
+      <h2>Undo</h2>
+      <p>Every rename run ScoreSifter performs is logged with the full old → new mapping. You can reverse a batch — or individual files within it — as long as the app is open.</p>
+
+      <h3>How to undo</h3>
+      <ol>
+        <li>Go to the <strong>All</strong> tab</li>
+        <li>Select the files you want to reverse, or select all files from a run</li>
+        <li>Click <strong>Undo Renames</strong></li>
+      </ol>
+      <p>ScoreSifter reverses the rename and removes the metadata it wrote from each PDF. The files return to their original names.</p>
+
+      <div class="callout">
+        <strong>Once the app is closed, the undo log is cleared.</strong> If you need to reverse renames after closing ScoreSifter, you'll need to do it manually or restore from a backup. This is why we recommend keeping a backup of your score folder before running a large batch for the first time.
+      </div>
+
+      <h3>Partial undo</h3>
+      <p>You don't have to undo an entire run. Select individual files in the All tab and undo just those — the rest of the batch stays as renamed.</p>
+    </section>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="brand" style="margin-bottom:14px;display:inline-flex">
+          <img src="images/app-icon.svg" alt="" width="22" height="22" style="border-radius:5px">
+          <span class="brand__name">ScoreSifter</span>
+        </a>
+        <p>Part of the Kairovo suite — quiet, durable desktop software for people who work in music.</p>
+      </div>
+      <div class="footer__col">
+        <h4>App</h4>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#how">How it works</a></li>
+          <li><a href="#forscore">forScore</a></li>
+          <li><a href="index.html#download">Download</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Suite</h4>
+        <ul>
+          <li><a href="https://kairovo.com">Kairovo</a></li>
+          <li><a href="https://recitalatlas.com">Recital Atlas</a></li>
+          <li><a href="https://ariadesk.com">AriaDesk</a></li>
+          <li><a href="https://vocemetry.com">Vocemetry</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="mailto:hello@kairovo.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Kairovo / ScoreSifter</span>
+      <span>KA-101 · v1.0 · Edition 2026.04</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

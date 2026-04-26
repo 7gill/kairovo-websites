@@ -423,7 +423,16 @@
 
 <!-- Lightbox -->
 <style>
-  .ss-frame img, .step__img { cursor: zoom-in; }
+  /* Disable Safari Live Text and other UA overlays on screenshot images */
+  .ss-frame, .step__img,
+  .ss-frame img, .step__img {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  .ss-frame img, .step__img { cursor: zoom-in; pointer-events: none; }
+  .ss-frame { cursor: zoom-in; }
+  .step:has(.step__img) { cursor: zoom-in; }
   .ss-lightbox {
     position: fixed; inset: 0;
     background: rgba(0, 0, 0, 0.85);
@@ -441,6 +450,7 @@
     height: auto;
     display: block;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
   }
 </style>
 <div class="ss-lightbox" id="ss-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged screenshot">
@@ -470,13 +480,36 @@
         if (lastFocus && lastFocus.focus) lastFocus.focus();
       }
 
-      var targets = document.querySelectorAll('.ss-frame img, .step__img');
-      console.log('[lightbox] attaching to ' + targets.length + ' images');
-      targets.forEach(function (img) {
-        img.style.cursor = 'zoom-in';
+      // Attach to PARENT containers, not images, so Safari Live Text
+      // overlay (pointer-events: auto on text regions) doesn't swallow clicks.
+      var frames = document.querySelectorAll('.ss-frame');
+      var steps = document.querySelectorAll('.step');
+      console.log('[lightbox] found ' + frames.length + ' ss-frames and ' + steps.length + ' steps');
+
+      frames.forEach(function (frame) {
+        frame.addEventListener('click', function (e) {
+          var img = frame.querySelector('img');
+          if (!img) return;
+          e.preventDefault();
+          openLb(img.currentSrc || img.src, img.alt);
+        });
+      });
+
+      steps.forEach(function (step) {
+        var img = step.querySelector('.step__img');
+        if (!img) return;
+        step.addEventListener('click', function (e) {
+          // Only trigger when the click is in the lower half (where the image is)
+          // or directly on a non-text element
+          var tag = (e.target.tagName || '').toLowerCase();
+          if (tag === 'img' || tag === 'article' || e.target === step) {
+            e.preventDefault();
+            openLb(img.currentSrc || img.src, img.alt);
+          }
+        });
+        // Also bind directly to the image area
         img.addEventListener('click', function (e) {
           e.preventDefault();
-          e.stopPropagation();
           openLb(img.currentSrc || img.src, img.alt);
         });
       });

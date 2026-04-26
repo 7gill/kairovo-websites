@@ -421,5 +421,71 @@
   </div>
 </footer>
 
+<!-- Lightbox -->
+<style>
+  .ss-frame img, .step__img { cursor: zoom-in; }
+  .ss-lightbox {
+    position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 9999;
+    cursor: zoom-out;
+    padding: 4vmin;
+  }
+  .ss-lightbox.is-open { display: flex; }
+  .ss-lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    display: block;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ss-lightbox { transition: opacity 120ms ease; }
+  }
+</style>
+<div class="ss-lightbox" id="ss-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged screenshot" hidden>
+  <img alt="" id="ss-lightbox-img">
+</div>
+<script>
+  (function () {
+    var lb = document.getElementById('ss-lightbox');
+    var lbImg = document.getElementById('ss-lightbox-img');
+    var lastFocus = null;
+
+    function open(src, alt) {
+      lastFocus = document.activeElement;
+      lbImg.src = src;
+      lbImg.alt = alt || '';
+      lb.hidden = false;
+      lb.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lb.classList.remove('is-open');
+      lb.hidden = true;
+      lbImg.src = '';
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    var targets = document.querySelectorAll('.ss-frame img, .step__img');
+    targets.forEach(function (img) {
+      img.addEventListener('click', function () {
+        open(img.currentSrc || img.src, img.alt);
+      });
+    });
+
+    lb.addEventListener('click', close);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lb.classList.contains('is-open')) close();
+    });
+  })();
+</script>
+
 </body>
 </html>

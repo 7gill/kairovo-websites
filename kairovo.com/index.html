@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kairovo — Software built for the music room</title>
+<meta name="description" content="Kairovo makes focused, local-first desktop software for singers, teachers and répétiteurs. One-time pricing. No subscriptions. No cloud.">
+<link rel="icon" type="image/svg+xml" href="images/kairovo-logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/7gill/kairovo-websites@main/design-system/kairovo-system.css">
+<style>
+/* ── Kairovo studio homepage — neutral accent (no data-app on studio page) ── */
+:root {
+  --ss-accent:  #3F7A54;
+  --accent:     #1C1B18;
+  --accent-ink: #FFFFFF;
+}
+
+/* K mark */
+.k-mark { display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:#1A1A18;border-radius:22%;flex-shrink:0; }
+.k-mark__letter { font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:17px;color:#F5F1E8;line-height:1;position:relative;top:1px; }
+
+/* topbar */
+.topbar { border-bottom:1px solid var(--rule-soft);background:color-mix(in srgb,var(--paper) 86%,transparent);position:sticky;top:0;z-index:50;backdrop-filter:blur(10px); }
+.topbar__inner { max-width:var(--max);margin:0 auto;padding:14px var(--gutter);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:40px; }
+.brand { display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit; }
+.brand__name { font-weight:600;letter-spacing:-.01em;font-size:15px; }
+.nav { display:flex;gap:28px;justify-content:center;list-style:none;margin:0;padding:0; }
+.nav a { font-size:13.5px;color:var(--ink-2);text-decoration:none;transition:color .15s; }
+.nav a:hover { color:var(--ink); }
+.topbar__right { display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2); }
+.dot-live { width:7px;height:7px;border-radius:50%;background:var(--ss-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--ss-accent) 18%,transparent);animation:pulse 2.4s ease-in-out infinite;flex-shrink:0; }
+@keyframes pulse {0%,100%{opacity:1}50%{opacity:.55}}
+
+/* wrap */
+.wrap { max-width:var(--max);margin:0 auto;padding:0 var(--gutter); }
+
+/* hero */
+.hero { padding:72px 0 0; }
+.hero__meta { display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-bottom:28px; }
+.hero__meta .cell { display:flex;flex-direction:column;gap:6px; }
+.hero__meta .cell .mono { font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3); }
+.hero__meta .cell .v { font-size:14px;color:var(--ink); }
+.hero__body { display:grid;grid-template-columns:1.1fr .9fr;gap:72px;padding:56px 0 96px;border-top:1px solid var(--rule-soft); }
+.hero__head { display:flex;flex-direction:column;gap:36px; }
+.hero__h1 { font-family:'Inter Tight',-apple-system,sans-serif;font-size:clamp(44px,6.2vw,78px);line-height:1.08;letter-spacing:-0.028em;font-weight:500;margin:0;text-wrap:balance;color:var(--ink); }
+.hero__h1 em { font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--ink-3); }
+.hero__lede { font-size:17.5px;line-height:1.5;color:var(--ink-2);max-width:42ch;margin:0; }
+.hero__lede strong { color:var(--ink);font-weight:500; }
+.hero__cta { display:flex;gap:12px;align-items:center;flex-wrap:wrap; }
+
+/* hero right: app status strip */
+.hero__status { display:flex;flex-direction:column;border:1px solid var(--rule-soft);align-self:start; }
+.status-row { display:grid;grid-template-columns:1fr auto;align-items:center;padding:14px 18px;border-bottom:1px solid var(--rule-soft);gap:12px;text-decoration:none;color:inherit;transition:background .15s; }
+.status-row:last-child { border-bottom:0; }
+.status-row:hover { background:var(--paper-2); }
+.status-row__left { display:flex;align-items:center;gap:12px; }
+.status-row__name { font-size:13.5px;font-weight:500;letter-spacing:-.01em; }
+.status-row__desc { font-size:11.5px;color:var(--ink-3);margin-top:1px; }
+.status-badge { font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--rule-soft);color:var(--ink-3);white-space:nowrap; }
+.status-badge--live { border-color:var(--ss-accent);color:var(--ss-accent);background:color-mix(in srgb,var(--ss-accent) 8%,transparent); }
+.status-badge--beta { border-color:#7A3A46;color:#7A3A46; }
+.status-badge--dev { color:var(--ink-4);border-color:var(--rule-softer); }
+
+/* buttons */
+.btn { display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border:1px solid var(--ink);border-radius:0;font-size:14px;font-weight:500;transition:background .15s,color .15s,border-color .15s;letter-spacing:-.005em;background:transparent;color:var(--ink);text-decoration:none;cursor:pointer;font-family:inherit; }
+.btn--primary { background:var(--ink);color:var(--paper); }
+.btn--primary:hover { background:#000; }
+.btn--live { background:var(--ss-accent);color:#fff;border-color:var(--ss-accent); }
+.btn--live:hover { filter:brightness(.92); }
+.btn--ghost { border-color:var(--rule-soft); }
+.btn--ghost:hover { border-color:var(--ink);background:var(--paper-2); }
+.btn .arr { font-size:16px;line-height:1; }
+
+/* section shared */
+.section { padding:80px 0;border-top:1px solid var(--rule-soft); }
+.section--tinted { background:var(--paper-2); }
+.section__head { display:grid;grid-template-columns:1fr 2fr;gap:40px;align-items:start;padding-bottom:48px; }
+.section__no { font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding-top:6px; }
+.section__title { font-size:clamp(28px,3.4vw,42px);line-height:1.06;letter-spacing:-.02em;font-weight:500;margin:0 0 16px; }
+.section__title em { font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400; }
+.section__lede { margin:0;color:var(--ink-2);font-size:15.5px;line-height:1.55;max-width:54ch; }
+
+/* § 01 — Four tools, one philosophy */
+.app-grid { display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-soft);border-left:1px solid var(--rule-soft); }
+.app-card { border-right:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft);padding:32px 30px;display:flex;flex-direction:column;gap:14px;transition:background .2s;text-decoration:none;color:inherit;position:relative; }
+.app-card:hover { background:var(--paper-2); }
+.app-card--static { cursor:default; }
+.app-card--static:hover { background:transparent; }
+.app-card__accent-bar { position:absolute;top:0;left:0;right:0;height:2px; }
+.app-card__top { display:flex;align-items:flex-start;gap:14px; }
+.app-card__meta { display:flex;flex-direction:column;gap:4px;flex:1; }
+.app-card__name { font-size:16px;font-weight:600;letter-spacing:-.02em;color:var(--ink); }
+.app-card__oneliner { font-size:12px;color:var(--ink-3);line-height:1.4; }
+.app-card__desc { font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0;flex:1; }
+.app-card__footer { display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:6px; }
+.app-card__link { font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:4px; }
+.app-card:hover .app-card__link { color:var(--ink); }
+
+/* § 02 — Principles */
+.principles-grid { display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-soft);border-left:1px solid var(--rule-soft); }
+.principle { border-right:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft);padding:28px 26px;display:flex;flex-direction:column;gap:12px; }
+.principle__no { font-family:'JetBrains Mono',monospace;font-size:28px;color:var(--ink-4);font-weight:400;line-height:1; }
+.principle__title { font-size:17px;font-weight:500;letter-spacing:-.01em;margin:0; }
+.principle__body { margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.6;flex:1; }
+.section__tagline { font-size:15px;line-height:1.7;color:var(--ink-3);max-width:62ch;font-style:italic;margin:16px 0 0; }
+
+/* § 03 — What's shipping — data table */
+.ship-table { width:100%;border-collapse:collapse;border-top:1px solid var(--rule-soft); }
+.ship-table thead tr { border-bottom:1px solid var(--rule-soft); }
+.ship-table thead th { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500;padding:12px 0;text-align:left; }
+.ship-table thead th:last-child { text-align:left; }
+.ship-table tbody tr { border-bottom:1px solid var(--rule-softer); }
+.ship-table tbody tr:last-child { border-bottom:0; }
+.ship-table td { padding:22px 0;vertical-align:middle; }
+.ship-table td + td { padding-left:24px; }
+.ship-td__num { font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--ink-4);width:48px; }
+.ship-td__name { font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--ink); }
+.ship-td__platform { font-size:13.5px;color:var(--ink-3); }
+.ship-td__stage { display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap; }
+.ship-td__stage-dot { width:7px;height:7px;border-radius:50%;border:1px solid currentColor;flex-shrink:0; }
+.ship-td__stage-dot--filled { background:var(--ss-accent);border-color:var(--ss-accent); }
+.ship-td__progress-wrap { width:120px; }
+.ship-td__progress-track { height:3px;background:var(--rule-softer);position:relative; }
+.ship-td__progress-fill { height:3px;position:absolute;top:0;left:0; }
+.ship-td__milestone { font-size:13.5px;color:var(--ink-2); }
+
+/* § 04 — Newsletter */
+.newsletter-inner { display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:start; }
+.newsletter__heading { font-size:clamp(26px,2.8vw,38px);font-weight:500;letter-spacing:-.02em;margin:0 0 16px;line-height:1.15; }
+.newsletter__heading em { font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400; }
+.newsletter__body { color:var(--ink-2);font-size:15px;line-height:1.6;margin:0 0 12px;max-width:48ch; }
+.newsletter__form-wrap { border:1px solid var(--rule-soft);padding:32px;background:var(--paper-2);display:flex;flex-direction:column;gap:20px; }
+.newsletter__form-title { font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3); }
+.newsletter__form { display:flex;flex-direction:column;gap:10px; }
+.newsletter__input { font:inherit;font-size:14px;padding:11px 14px;border:1px solid var(--rule-soft);background:var(--paper);color:var(--ink);outline:none;border-radius:0;width:100%;transition:border-color .15s; }
+.newsletter__input:focus { border-color:var(--ink); }
+.newsletter__input::placeholder { color:var(--ink-4); }
+.newsletter__note { font-size:12px;color:var(--ink-4);line-height:1.5; }
+
+/* § 05 — FAQ */
+.faq { border-top:1px solid var(--rule-soft); }
+.faq details { border-bottom:1px solid var(--rule-softer); }
+.faq summary { list-style:none;cursor:pointer;display:grid;grid-template-columns:60px 1fr 24px;gap:24px;align-items:center;padding:22px 0;font-size:17px;letter-spacing:-.01em;font-weight:500; }
+.faq summary::-webkit-details-marker { display:none; }
+.faq summary .q-no { font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--ink-3);font-weight:500; }
+.faq summary .q-plus { justify-self:end;font-size:20px;color:var(--ink-3);font-weight:300;line-height:1;transition:transform .2s; }
+.faq details[open] summary .q-plus { transform:rotate(45deg);color:var(--ss-accent); }
+.faq__body { padding:0 24px 28px 84px;color:var(--ink-2);font-size:14.5px;line-height:1.6;max-width:70ch; }
+
+/* footer */
+.footer { border-top:1px solid var(--rule-soft);background:var(--paper);padding:48px 0 32px; }
+.footer__grid { display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:48px; }
+.footer__brand p { margin:12px 0 0;color:var(--ink-3);font-size:13px;line-height:1.55;max-width:34ch; }
+.footer__col h4 { font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin:0 0 18px; }
+.footer__col ul { list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px; }
+.footer__col a { font-size:14px;color:var(--ink-2);text-decoration:none;transition:color .15s; }
+.footer__col a:hover { color:var(--ink); }
+.footer__bottom { margin-top:48px;padding-top:20px;border-top:1px solid var(--rule-softer);display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3); }
+
+/* responsive */
+@media (max-width:1040px) {
+  .hero__body,.newsletter-inner { grid-template-columns:1fr;gap:48px; }
+  .hero__meta { grid-template-columns:1fr 1fr;row-gap:18px; }
+  .section__head { grid-template-columns:1fr; }
+  .footer__grid { grid-template-columns:1fr 1fr; }
+  nav.nav { display:none; }
+  .ship-table thead { display:none; }
+  .ship-table td { display:block;padding:6px 0; }
+  .ship-table td + td { padding-left:0; }
+  .ship-table tbody tr { display:block;padding:18px 0;border-bottom:1px solid var(--rule-softer); }
+}
+@media (max-width:680px) {
+  :root { --gutter:20px; }
+  .hero { padding:40px 0 0; }
+  .app-grid,.principles-grid { grid-template-columns:1fr; }
+  .footer__grid { grid-template-columns:1fr; }
+  .footer__bottom { flex-direction:column;gap:8px; }
+  .faq summary { grid-template-columns:48px 1fr 20px;gap:16px; }
+  .faq__body { padding-left:64px; }
+
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a href="index.html" class="brand">
+      <span class="k-mark"><span class="k-mark__letter">K</span></span>
+      <span class="brand__name">Kairovo</span>
+    </a>
+    <nav class="nav">
+      <a href="#suite">Apps</a>
+      <a href="#principles">Principles</a>
+      <a href="#faq">FAQ</a>
+      <a href="#newsletter">Newsletter</a>
+    </nav>
+    <div class="topbar__right">
+      <span class="dot-live"></span>
+      ScoreSifter v1.0 — live
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__meta">
+      <div class="cell"><span class="mono">Index</span><span class="v">KA-000 / Studio</span></div>
+      <div class="cell"><span class="mono">Studio</span><span class="v">Kairovo, NZ</span></div>
+      <div class="cell"><span class="mono">Catalogue</span><span class="v">Four apps — one suite</span></div>
+      <div class="cell"><span class="mono">Edition</span><span class="v">2026.04</span></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="hero__body">
+      <div class="hero__head">
+        <h1 class="hero__h1">Software built<br>for the <em>music room.</em></h1>
+        <p class="hero__lede">Focused desktop tools for singers, teachers and répétiteurs. <strong>No cloud dependency, no subscriptions, no accounts.</strong> Software that works the way professional musicians actually work.</p>
+        <div class="hero__cta">
+          <a href="https://scoresifter.com" class="btn btn--live">Get ScoreSifter — free <span class="arr">↗</span></a>
+          <a href="#suite" class="btn btn--ghost">See all apps <span class="arr">↓</span></a>
+        </div>
+      </div>
+
+      <div class="hero__status" aria-label="App status">
+        <a class="status-row" href="https://scoresifter.com">
+          <div class="status-row__left">
+            <svg width="32" height="32" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <defs>
+    <clipPath id="roundclip-ss">
+      <rect x="0" y="0" width="2048" height="2048" rx="472"/>
+    </clipPath>
+    <linearGradient id="trigrad-ss" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)">
+      <stop offset="0" style="stop-color:#2A5238;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#3F7A54;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="lettergrad-ss" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,0.6192,-0.6192,0,0.048276,-0.6192)">
+      <stop offset="0" style="stop-color:#A0FFE0;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#FFFFFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" rx="472" fill="#1C1B18"/>
+  <polygon points="0,2048 0,273 1775,2048" fill="url(#trigrad-ss)" opacity="0.42" clip-path="url(#roundclip-ss)"/>
+  <g transform="matrix(13.653333,0,0,13.653333,1012.867187,1652.540039)">
+    <g transform="matrix(139.160156,0,0,139.160156,-38.697124,0)">
+      <path d="M0.47,-0.677L0.475,-0.457L0.455,-0.457C0.446,-0.512 0.422,-0.556 0.385,-0.59C0.349,-0.624 0.309,-0.641 0.266,-0.641C0.232,-0.641 0.206,-0.632 0.187,-0.614C0.167,-0.596 0.158,-0.576 0.158,-0.553C0.158,-0.538 0.161,-0.525 0.168,-0.514C0.177,-0.498 0.193,-0.483 0.213,-0.468C0.229,-0.458 0.264,-0.438 0.319,-0.411C0.397,-0.373 0.449,-0.337 0.476,-0.303C0.503,-0.269 0.516,-0.231 0.516,-0.187C0.516,-0.132 0.495,-0.084 0.451,-0.044C0.408,-0.004 0.354,0.016 0.287,0.016C0.266,0.016 0.247,0.014 0.228,0.009C0.209,0.005 0.186,-0.003 0.158,-0.015C0.143,-0.021 0.13,-0.024 0.12,-0.024C0.111,-0.024 0.102,-0.021 0.093,-0.015C0.083,-0.008 0.076,0.002 0.07,0.015L0.052,0.015L0.052,-0.235L0.07,-0.235C0.084,-0.165 0.112,-0.111 0.153,-0.074C0.193,-0.037 0.237,-0.019 0.285,-0.019C0.321,-0.019 0.35,-0.028 0.372,-0.048C0.393,-0.068 0.404,-0.091 0.404,-0.118C0.404,-0.133 0.4,-0.148 0.392,-0.163C0.384,-0.178 0.371,-0.192 0.354,-0.205C0.337,-0.218 0.307,-0.235 0.264,-0.256C0.204,-0.286 0.161,-0.311 0.134,-0.332C0.108,-0.353 0.088,-0.376 0.073,-0.402C0.059,-0.428 0.052,-0.456 0.052,-0.487C0.052,-0.54 0.072,-0.584 0.11,-0.622C0.149,-0.659 0.198,-0.677 0.257,-0.677C0.278,-0.677 0.299,-0.675 0.319,-0.669C0.335,-0.666 0.353,-0.658 0.375,-0.648C0.397,-0.637 0.413,-0.632 0.421,-0.632C0.43,-0.632 0.437,-0.634 0.441,-0.64C0.446,-0.645 0.451,-0.657 0.455,-0.677L0.47,-0.677Z" style="fill:url(#lettergrad-ss);fill-rule:nonzero;"/>
+    </g>
+  </g>
+</svg>
+            <div>
+              <div class="status-row__name">ScoreSifter</div>
+              <div class="status-row__desc">Sheet music batch renamer</div>
+            </div>
+          </div>
+          <span class="status-badge status-badge--live"><span class="dot-live" style="width:5px;height:5px;display:inline-block;margin-right:4px"></span>Live — free</span>
+        </a>
+        <a class="status-row" href="https://recitalatlas.com">
+          <div class="status-row__left">
+            <svg width="32" height="32" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <defs>
+    <clipPath id="roundclip-ra">
+      <rect x="0" y="0" width="2048" height="2048" rx="472"/>
+    </clipPath>
+    <linearGradient id="trigrad-ra" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)">
+      <stop offset="0" style="stop-color:#3D1A20;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#7A3A46;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="lettergrad-ra" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,0.6192,-0.6192,0,0.073684,-0.6192)">
+      <stop offset="0" style="stop-color:#ECC4CC;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#FFFFFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" rx="472" fill="#1C1B18"/>
+  <polygon points="0,2048 0,273 1775,2048" fill="url(#trigrad-ra)" opacity="0.42" clip-path="url(#roundclip-ra)"/>
+  <g transform="matrix(13.653333,0,0,13.653333,998.023438,1653.003906)">
+    <g transform="matrix(139.160156,0,0,139.160156,-50.248504,0)">
+      <path d="M0.266,-0.302L0.266,-0.116C0.266,-0.08 0.268,-0.058 0.272,-0.049C0.277,-0.039 0.284,-0.032 0.295,-0.026C0.306,-0.021 0.327,-0.018 0.357,-0.018L0.357,-0L0.019,-0L0.019,-0.018C0.049,-0.018 0.07,-0.021 0.081,-0.027C0.092,-0.032 0.099,-0.04 0.104,-0.049C0.108,-0.058 0.11,-0.08 0.11,-0.116L0.11,-0.546C0.11,-0.582 0.108,-0.604 0.104,-0.614C0.099,-0.623 0.092,-0.63 0.081,-0.636C0.069,-0.641 0.049,-0.644 0.019,-0.644L0.019,-0.662L0.326,-0.662C0.406,-0.662 0.465,-0.657 0.502,-0.646C0.539,-0.634 0.569,-0.614 0.593,-0.584C0.616,-0.554 0.628,-0.52 0.628,-0.479C0.628,-0.431 0.61,-0.39 0.575,-0.358C0.553,-0.338 0.521,-0.323 0.481,-0.313L0.64,-0.089C0.661,-0.06 0.676,-0.042 0.685,-0.035C0.698,-0.025 0.713,-0.019 0.731,-0.018L0.731,-0L0.522,-0L0.309,-0.302L0.266,-0.302ZM0.266,-0.626L0.266,-0.336L0.293,-0.336C0.339,-0.336 0.373,-0.341 0.395,-0.349C0.417,-0.357 0.435,-0.372 0.448,-0.394C0.461,-0.415 0.467,-0.444 0.467,-0.479C0.467,-0.529 0.455,-0.566 0.432,-0.59C0.408,-0.614 0.37,-0.626 0.318,-0.626L0.266,-0.626Z" style="fill:url(#lettergrad-ra);fill-rule:nonzero;"/>
+    </g>
+  </g>
+</svg>
+            <div>
+              <div class="status-row__name">Recital Atlas</div>
+              <div class="status-row__desc">Recital planning &amp; repertoire</div>
+            </div>
+          </div>
+          <span class="status-badge status-badge--beta">Beta prep</span>
+        </a>
+        <div class="status-row" style="cursor:default">
+          <div class="status-row__left">
+            <svg width="32" height="32" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <path d="M2048,472L2048,1576C2048,1836.504 1836.504,2048 1576,2048L472,2048C211.496,2048 0,1836.504 0,1576L0,472C0,211.496 211.496,0 472,0L1576,0C1836.504,0 2048,211.496 2048,472Z" style="fill:rgb(28,27,24);"/>
+    <clipPath id="_clip1-ad">
+        <path d="M2048,472L2048,1576C2048,1836.504 1836.504,2048 1576,2048L472,2048C211.496,2048 0,1836.504 0,1576L0,472C0,211.496 211.496,0 472,0L1576,0C1836.504,0 2048,211.496 2048,472Z"/>
+    </clipPath>
+    <g clip-path="url(#_clip1-ad)">
+        <path d="M0,2048L0,273L1775,2048L0,2048Z" style="fill:url(#_Linear2-ad);"/>
+    </g>
+    <g transform="matrix(6.223841,0,0,6.223841,-5675.106128,-8930.045855)">
+        <path d="M1185.564,1700.692L1076.861,1700.692L1076.861,1689.723C1081.923,1689.348 1087.876,1688.434 1094.72,1686.981C1101.564,1685.528 1104.986,1683.723 1104.986,1681.567C1104.986,1680.817 1104.915,1679.973 1104.775,1679.036C1104.634,1678.098 1104.236,1676.833 1103.579,1675.239L1086.564,1633.895L1017.658,1633.895C1016.064,1637.739 1014.306,1642.239 1012.384,1647.395C1010.462,1652.551 1008.798,1657.145 1007.392,1661.176C1005.611,1666.426 1004.556,1670.223 1004.228,1672.567C1003.9,1674.911 1003.736,1676.551 1003.736,1677.489C1003.736,1680.489 1006.009,1683.044 1010.556,1685.153C1015.103,1687.262 1022.673,1688.786 1033.267,1689.723L1033.267,1700.692L951.423,1700.692L951.423,1689.723C954.517,1689.536 958.009,1689.044 961.9,1688.247C965.79,1687.45 968.861,1686.348 971.111,1684.942C974.954,1682.692 978.212,1679.926 980.884,1676.645C983.556,1673.364 985.783,1669.473 987.564,1664.973C998.439,1638.63 1009.337,1612.239 1020.259,1585.801C1031.181,1559.364 1043.251,1530.208 1056.47,1498.333L1084.595,1498.333C1102.97,1543.52 1117.361,1579.239 1127.767,1605.489C1138.173,1631.739 1147.033,1653.489 1154.345,1670.739C1155.564,1673.551 1157.111,1676.106 1158.986,1678.403C1160.861,1680.7 1163.533,1682.88 1167.001,1684.942C1169.626,1686.442 1172.673,1687.567 1176.142,1688.317C1179.611,1689.067 1182.751,1689.536 1185.564,1689.723L1185.564,1700.692ZM1080.798,1619.973L1051.829,1547.692L1023.283,1619.973L1080.798,1619.973Z" style="fill:url(#_Linear3-ad);fill-rule:nonzero;"/>
+    </g>
+    <defs>
+        <linearGradient id="_Linear2-ad" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)"><stop offset="0" style="stop-color:rgb(15,30,38);stop-opacity:0.42"/><stop offset="1" style="stop-color:rgb(61,90,108);stop-opacity:0.42"/></linearGradient>
+        <linearGradient id="_Linear3-ad" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,189.276322,-209.50849,0,999.36241,1511.415798)"><stop offset="0" style="stop-color:rgb(192,212,220);stop-opacity:1"/><stop offset="1" style="stop-color:white;stop-opacity:1"/></linearGradient>
+    </defs>
+</svg>
+            <div>
+              <div class="status-row__name">AriaDesk</div>
+              <div class="status-row__desc">Voice studio CRM</div>
+            </div>
+          </div>
+          <span class="status-badge status-badge--dev">In dev</span>
+        </div>
+        <div class="status-row" style="cursor:default">
+          <div class="status-row__left">
+            <svg width="32" height="32" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <defs>
+    <clipPath id="roundclip-vm">
+      <rect x="0" y="0" width="2048" height="2048" rx="472"/>
+    </clipPath>
+    <linearGradient id="trigrad-vm" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)">
+      <stop offset="0" style="stop-color:#120828;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#4A1A8F;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="lettergrad-vm" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,0.6192,-0.6192,0,0.088084,-0.6192)">
+      <stop offset="0" style="stop-color:#D4A0FF;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#FFFFFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" rx="472" fill="#1C1B18"/>
+  <polygon points="0,2048 0,273 1775,2048" fill="url(#trigrad-vm)" opacity="0.42" clip-path="url(#roundclip-vm)"/>
+  <g transform="matrix(13.653333,0,0,13.653333,990,1653)">
+    <g transform="matrix(139.160156,0,0,139.160156,-50.248504,0)">
+      <path d="M0.712,-0.662L0.712,-0.644C0.688,-0.64 0.666,-0.627 0.647,-0.605C0.634,-0.589 0.613,-0.551 0.586,-0.491L0.358,0.015L0.342,0.015L0.115,-0.511C0.088,-0.575 0.07,-0.612 0.06,-0.623C0.051,-0.634 0.034,-0.641 0.008,-0.644L0.008,-0.662L0.325,-0.662L0.325,-0.644L0.314,-0.644C0.286,-0.644 0.266,-0.64 0.256,-0.633C0.248,-0.628 0.245,-0.621 0.245,-0.612C0.245,-0.606 0.246,-0.599 0.249,-0.591C0.251,-0.583 0.26,-0.562 0.275,-0.527L0.416,-0.197L0.547,-0.491C0.562,-0.526 0.572,-0.55 0.576,-0.562C0.579,-0.574 0.581,-0.584 0.581,-0.593C0.581,-0.603 0.578,-0.611 0.573,-0.619C0.568,-0.626 0.56,-0.632 0.55,-0.636C0.536,-0.641 0.518,-0.644 0.495,-0.644L0.495,-0.662L0.712,-0.662Z" style="fill:url(#lettergrad-vm);fill-rule:nonzero;"/>
+    </g>
+  </g>
+</svg>
+            <div>
+              <div class="status-row__name">Vocemetry</div>
+              <div class="status-row__desc">Voice analytics</div>
+            </div>
+          </div>
+          <span class="status-badge status-badge--dev">In dev</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- § 01 — FOUR TOOLS, ONE PHILOSOPHY -->
+<section class="section" id="suite">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="section__no">§ 01 &nbsp; The suite</div>
+      <div>
+        <h2 class="section__title">Four tools. <em>One philosophy.</em></h2>
+        <p class="section__lede">Each app stands alone — built around one problem, done well. Together they cover the full desktop workflow for classical voice.</p>
+      </div>
+    </div>
+    <div class="app-grid">
+
+      <a class="app-card" href="https://scoresifter.com">
+        <div class="app-card__accent-bar" style="background:#3F7A54"></div>
+        <div class="app-card__top">
+          <svg width="44" height="44" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <defs>
+    <clipPath id="roundclip-ss">
+      <rect x="0" y="0" width="2048" height="2048" rx="472"/>
+    </clipPath>
+    <linearGradient id="trigrad-ss" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)">
+      <stop offset="0" style="stop-color:#2A5238;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#3F7A54;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="lettergrad-ss" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,0.6192,-0.6192,0,0.048276,-0.6192)">
+      <stop offset="0" style="stop-color:#A0FFE0;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#FFFFFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" rx="472" fill="#1C1B18"/>
+  <polygon points="0,2048 0,273 1775,2048" fill="url(#trigrad-ss)" opacity="0.42" clip-path="url(#roundclip-ss)"/>
+  <g transform="matrix(13.653333,0,0,13.653333,1012.867187,1652.540039)">
+    <g transform="matrix(139.160156,0,0,139.160156,-38.697124,0)">
+      <path d="M0.47,-0.677L0.475,-0.457L0.455,-0.457C0.446,-0.512 0.422,-0.556 0.385,-0.59C0.349,-0.624 0.309,-0.641 0.266,-0.641C0.232,-0.641 0.206,-0.632 0.187,-0.614C0.167,-0.596 0.158,-0.576 0.158,-0.553C0.158,-0.538 0.161,-0.525 0.168,-0.514C0.177,-0.498 0.193,-0.483 0.213,-0.468C0.229,-0.458 0.264,-0.438 0.319,-0.411C0.397,-0.373 0.449,-0.337 0.476,-0.303C0.503,-0.269 0.516,-0.231 0.516,-0.187C0.516,-0.132 0.495,-0.084 0.451,-0.044C0.408,-0.004 0.354,0.016 0.287,0.016C0.266,0.016 0.247,0.014 0.228,0.009C0.209,0.005 0.186,-0.003 0.158,-0.015C0.143,-0.021 0.13,-0.024 0.12,-0.024C0.111,-0.024 0.102,-0.021 0.093,-0.015C0.083,-0.008 0.076,0.002 0.07,0.015L0.052,0.015L0.052,-0.235L0.07,-0.235C0.084,-0.165 0.112,-0.111 0.153,-0.074C0.193,-0.037 0.237,-0.019 0.285,-0.019C0.321,-0.019 0.35,-0.028 0.372,-0.048C0.393,-0.068 0.404,-0.091 0.404,-0.118C0.404,-0.133 0.4,-0.148 0.392,-0.163C0.384,-0.178 0.371,-0.192 0.354,-0.205C0.337,-0.218 0.307,-0.235 0.264,-0.256C0.204,-0.286 0.161,-0.311 0.134,-0.332C0.108,-0.353 0.088,-0.376 0.073,-0.402C0.059,-0.428 0.052,-0.456 0.052,-0.487C0.052,-0.54 0.072,-0.584 0.11,-0.622C0.149,-0.659 0.198,-0.677 0.257,-0.677C0.278,-0.677 0.299,-0.675 0.319,-0.669C0.335,-0.666 0.353,-0.658 0.375,-0.648C0.397,-0.637 0.413,-0.632 0.421,-0.632C0.43,-0.632 0.437,-0.634 0.441,-0.64C0.446,-0.645 0.451,-0.657 0.455,-0.677L0.47,-0.677Z" style="fill:url(#lettergrad-ss);fill-rule:nonzero;"/>
+    </g>
+  </g>
+</svg>
+          <div class="app-card__meta">
+            <span class="app-card__name">ScoreSifter</span>
+            <span class="app-card__oneliner">Rename a folder of sheet music files in one pass</span>
+          </div>
+        </div>
+        <p class="app-card__desc">Matches filenames against a 43k-work catalogue, writes forScore-compatible metadata into every file. Offline, reviewable, reversible. Free on macOS, Windows and Linux.</p>
+        <div class="app-card__footer">
+          <span class="app-card__link">scoresifter.com <span class="arr">→</span></span>
+          <span class="status-badge status-badge--live"><span class="dot-live" style="width:5px;height:5px;display:inline-block;margin-right:4px"></span>Live — free</span>
+        </div>
+      </a>
+
+      <a class="app-card" href="https://recitalatlas.com">
+        <div class="app-card__accent-bar" style="background:#7A3A46"></div>
+        <div class="app-card__top">
+          <svg width="44" height="44" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <defs>
+    <clipPath id="roundclip-ra">
+      <rect x="0" y="0" width="2048" height="2048" rx="472"/>
+    </clipPath>
+    <linearGradient id="trigrad-ra" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)">
+      <stop offset="0" style="stop-color:#3D1A20;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#7A3A46;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="lettergrad-ra" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,0.6192,-0.6192,0,0.073684,-0.6192)">
+      <stop offset="0" style="stop-color:#ECC4CC;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#FFFFFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" rx="472" fill="#1C1B18"/>
+  <polygon points="0,2048 0,273 1775,2048" fill="url(#trigrad-ra)" opacity="0.42" clip-path="url(#roundclip-ra)"/>
+  <g transform="matrix(13.653333,0,0,13.653333,998.023438,1653.003906)">
+    <g transform="matrix(139.160156,0,0,139.160156,-50.248504,0)">
+      <path d="M0.266,-0.302L0.266,-0.116C0.266,-0.08 0.268,-0.058 0.272,-0.049C0.277,-0.039 0.284,-0.032 0.295,-0.026C0.306,-0.021 0.327,-0.018 0.357,-0.018L0.357,-0L0.019,-0L0.019,-0.018C0.049,-0.018 0.07,-0.021 0.081,-0.027C0.092,-0.032 0.099,-0.04 0.104,-0.049C0.108,-0.058 0.11,-0.08 0.11,-0.116L0.11,-0.546C0.11,-0.582 0.108,-0.604 0.104,-0.614C0.099,-0.623 0.092,-0.63 0.081,-0.636C0.069,-0.641 0.049,-0.644 0.019,-0.644L0.019,-0.662L0.326,-0.662C0.406,-0.662 0.465,-0.657 0.502,-0.646C0.539,-0.634 0.569,-0.614 0.593,-0.584C0.616,-0.554 0.628,-0.52 0.628,-0.479C0.628,-0.431 0.61,-0.39 0.575,-0.358C0.553,-0.338 0.521,-0.323 0.481,-0.313L0.64,-0.089C0.661,-0.06 0.676,-0.042 0.685,-0.035C0.698,-0.025 0.713,-0.019 0.731,-0.018L0.731,-0L0.522,-0L0.309,-0.302L0.266,-0.302ZM0.266,-0.626L0.266,-0.336L0.293,-0.336C0.339,-0.336 0.373,-0.341 0.395,-0.349C0.417,-0.357 0.435,-0.372 0.448,-0.394C0.461,-0.415 0.467,-0.444 0.467,-0.479C0.467,-0.529 0.455,-0.566 0.432,-0.59C0.408,-0.614 0.37,-0.626 0.318,-0.626L0.266,-0.626Z" style="fill:url(#lettergrad-ra);fill-rule:nonzero;"/>
+    </g>
+  </g>
+</svg>
+          <div class="app-card__meta">
+            <span class="app-card__name">Recital Atlas</span>
+            <span class="app-card__oneliner">Programme and archive recitals, track repertoire</span>
+          </div>
+        </div>
+        <p class="app-card__desc">A local SQLite database for singers, teachers and concert programmers. Artists, repertoire, scores and programs — all in one offline desktop app. One-time purchase.</p>
+        <div class="app-card__footer">
+          <span class="app-card__link">recitalatlas.com <span class="arr">→</span></span>
+          <span class="status-badge status-badge--beta">Beta prep</span>
+        </div>
+      </a>
+
+      <div class="app-card app-card--static">
+        <div class="app-card__accent-bar" style="background:#3D5A6C"></div>
+        <div class="app-card__top">
+          <svg width="44" height="44" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <path d="M2048,472L2048,1576C2048,1836.504 1836.504,2048 1576,2048L472,2048C211.496,2048 0,1836.504 0,1576L0,472C0,211.496 211.496,0 472,0L1576,0C1836.504,0 2048,211.496 2048,472Z" style="fill:rgb(28,27,24);"/>
+    <clipPath id="_clip1-ad">
+        <path d="M2048,472L2048,1576C2048,1836.504 1836.504,2048 1576,2048L472,2048C211.496,2048 0,1836.504 0,1576L0,472C0,211.496 211.496,0 472,0L1576,0C1836.504,0 2048,211.496 2048,472Z"/>
+    </clipPath>
+    <g clip-path="url(#_clip1-ad)">
+        <path d="M0,2048L0,273L1775,2048L0,2048Z" style="fill:url(#_Linear2-ad);"/>
+    </g>
+    <g transform="matrix(6.223841,0,0,6.223841,-5675.106128,-8930.045855)">
+        <path d="M1185.564,1700.692L1076.861,1700.692L1076.861,1689.723C1081.923,1689.348 1087.876,1688.434 1094.72,1686.981C1101.564,1685.528 1104.986,1683.723 1104.986,1681.567C1104.986,1680.817 1104.915,1679.973 1104.775,1679.036C1104.634,1678.098 1104.236,1676.833 1103.579,1675.239L1086.564,1633.895L1017.658,1633.895C1016.064,1637.739 1014.306,1642.239 1012.384,1647.395C1010.462,1652.551 1008.798,1657.145 1007.392,1661.176C1005.611,1666.426 1004.556,1670.223 1004.228,1672.567C1003.9,1674.911 1003.736,1676.551 1003.736,1677.489C1003.736,1680.489 1006.009,1683.044 1010.556,1685.153C1015.103,1687.262 1022.673,1688.786 1033.267,1689.723L1033.267,1700.692L951.423,1700.692L951.423,1689.723C954.517,1689.536 958.009,1689.044 961.9,1688.247C965.79,1687.45 968.861,1686.348 971.111,1684.942C974.954,1682.692 978.212,1679.926 980.884,1676.645C983.556,1673.364 985.783,1669.473 987.564,1664.973C998.439,1638.63 1009.337,1612.239 1020.259,1585.801C1031.181,1559.364 1043.251,1530.208 1056.47,1498.333L1084.595,1498.333C1102.97,1543.52 1117.361,1579.239 1127.767,1605.489C1138.173,1631.739 1147.033,1653.489 1154.345,1670.739C1155.564,1673.551 1157.111,1676.106 1158.986,1678.403C1160.861,1680.7 1163.533,1682.88 1167.001,1684.942C1169.626,1686.442 1172.673,1687.567 1176.142,1688.317C1179.611,1689.067 1182.751,1689.536 1185.564,1689.723L1185.564,1700.692ZM1080.798,1619.973L1051.829,1547.692L1023.283,1619.973L1080.798,1619.973Z" style="fill:url(#_Linear3-ad);fill-rule:nonzero;"/>
+    </g>
+    <defs>
+        <linearGradient id="_Linear2-ad" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)"><stop offset="0" style="stop-color:rgb(15,30,38);stop-opacity:0.42"/><stop offset="1" style="stop-color:rgb(61,90,108);stop-opacity:0.42"/></linearGradient>
+        <linearGradient id="_Linear3-ad" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,189.276322,-209.50849,0,999.36241,1511.415798)"><stop offset="0" style="stop-color:rgb(192,212,220);stop-opacity:1"/><stop offset="1" style="stop-color:white;stop-opacity:1"/></linearGradient>
+    </defs>
+</svg>
+          <div class="app-card__meta">
+            <span class="app-card__name">AriaDesk</span>
+            <span class="app-card__oneliner">Voice studio CRM — students, lessons, scheduling, invoicing</span>
+          </div>
+        </div>
+        <p class="app-card__desc">Native macOS. Quiet by default. For the singing teacher who wants to run their studio from a single app — without adopting a cloud platform or a subscription.</p>
+        <div class="app-card__footer">
+          <span class="app-card__link" style="color:var(--ink-4)">ariadesk.com</span>
+          <span class="status-badge status-badge--dev">In development</span>
+        </div>
+      </div>
+
+      <div class="app-card app-card--static">
+        <div class="app-card__accent-bar" style="background:#4A1A8F"></div>
+        <div class="app-card__top">
+          <svg width="44" height="44" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <defs>
+    <clipPath id="roundclip-vm">
+      <rect x="0" y="0" width="2048" height="2048" rx="472"/>
+    </clipPath>
+    <linearGradient id="trigrad-vm" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)">
+      <stop offset="0" style="stop-color:#120828;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#4A1A8F;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="lettergrad-vm" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,0.6192,-0.6192,0,0.088084,-0.6192)">
+      <stop offset="0" style="stop-color:#D4A0FF;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#FFFFFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" rx="472" fill="#1C1B18"/>
+  <polygon points="0,2048 0,273 1775,2048" fill="url(#trigrad-vm)" opacity="0.42" clip-path="url(#roundclip-vm)"/>
+  <g transform="matrix(13.653333,0,0,13.653333,990,1653)">
+    <g transform="matrix(139.160156,0,0,139.160156,-50.248504,0)">
+      <path d="M0.712,-0.662L0.712,-0.644C0.688,-0.64 0.666,-0.627 0.647,-0.605C0.634,-0.589 0.613,-0.551 0.586,-0.491L0.358,0.015L0.342,0.015L0.115,-0.511C0.088,-0.575 0.07,-0.612 0.06,-0.623C0.051,-0.634 0.034,-0.641 0.008,-0.644L0.008,-0.662L0.325,-0.662L0.325,-0.644L0.314,-0.644C0.286,-0.644 0.266,-0.64 0.256,-0.633C0.248,-0.628 0.245,-0.621 0.245,-0.612C0.245,-0.606 0.246,-0.599 0.249,-0.591C0.251,-0.583 0.26,-0.562 0.275,-0.527L0.416,-0.197L0.547,-0.491C0.562,-0.526 0.572,-0.55 0.576,-0.562C0.579,-0.574 0.581,-0.584 0.581,-0.593C0.581,-0.603 0.578,-0.611 0.573,-0.619C0.568,-0.626 0.56,-0.632 0.55,-0.636C0.536,-0.641 0.518,-0.644 0.495,-0.644L0.495,-0.662L0.712,-0.662Z" style="fill:url(#lettergrad-vm);fill-rule:nonzero;"/>
+    </g>
+  </g>
+</svg>
+          <div class="app-card__meta">
+            <span class="app-card__name">Vocemetry</span>
+            <span class="app-card__oneliner">Voice analytics for singers</span>
+          </div>
+        </div>
+        <p class="app-card__desc">Track range, stamina and technical progress over time. Offline, private, designed for the teaching studio. Pairs with Recital Atlas and AriaDesk.</p>
+        <div class="app-card__footer">
+          <span class="app-card__link" style="color:var(--ink-4)">vocemetry.com</span>
+          <span class="status-badge status-badge--dev">In development</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- § 02 — PRINCIPLES -->
+<section class="section section--tinted" id="principles">
+  <div class="wrap">
+    <div class="section__head" style="padding-bottom:36px">
+      <div class="section__no">§ 02 &nbsp; Principles</div>
+      <div>
+        <h2 class="section__title">Three things we won't <em>compromise on.</em></h2>
+        <p class="section__tagline">Kairovo is small on purpose. These constraints are load-bearing — they're why the software stays simple and stays yours.</p>
+      </div>
+    </div>
+    <div class="principles-grid">
+      <div class="principle">
+        <span class="principle__no">01</span>
+        <h3 class="principle__title">Local-first, always</h3>
+        <p class="principle__body">Your data lives on your machine. No accounts required, no internet dependency, no service shutdowns taking your work with them. Your library is yours, indefinitely.</p>
+      </div>
+      <div class="principle">
+        <span class="principle__no">02</span>
+        <h3 class="principle__title">One-time pricing</h3>
+        <p class="principle__body">We charge once for software that works indefinitely. Subscriptions for desktop tools that don't fundamentally change make no sense — to us or to you.</p>
+      </div>
+      <div class="principle">
+        <span class="principle__no">03</span>
+        <h3 class="principle__title">Built for the real workflow</h3>
+        <p class="principle__body">The features that exist are the ones that real singers and teachers actually need. Nothing is added for a feature list. Nothing is left out to justify a higher tier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- § 03 — WHAT'S SHIPPING -->
+<section class="section" id="shipping">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="section__no">§ 03 &nbsp; Shipping</div>
+      <div>
+        <h2 class="section__title">What's shipping<br>and <em>what's next.</em></h2>
+        <p class="section__lede">One app is live. One is in beta preparation. Two are in active development.</p>
+      </div>
+    </div>
+    <table class="ship-table">
+      <thead>
+        <tr>
+          <th style="width:48px">#</th>
+          <th style="padding-left:24px">App</th>
+          <th style="padding-left:24px">Platform</th>
+          <th style="padding-left:24px">Stage</th>
+          <th style="padding-left:24px">Progress</th>
+          <th style="padding-left:24px">Next milestone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ship-td__num">01</td>
+          <td class="ship-td__name">ScoreSifter</td>
+          <td class="ship-td__platform">macOS · Win · Linux</td>
+          <td>
+            <span class="ship-td__stage">
+              <span class="ship-td__stage-dot ship-td__stage-dot--filled"></span>
+              Live · v1.0
+            </span>
+          </td>
+          <td class="ship-td__progress-wrap">
+            <div class="ship-td__progress-track">
+              <div class="ship-td__progress-fill" style="width:100%;background:var(--ss-accent)"></div>
+            </div>
+          </td>
+          <td class="ship-td__milestone">Ongoing catalogue updates</td>
+        </tr>
+        <tr>
+          <td class="ship-td__num">02</td>
+          <td class="ship-td__name">Recital Atlas</td>
+          <td class="ship-td__platform">macOS · Win · Linux</td>
+          <td>
+            <span class="ship-td__stage">
+              <span class="ship-td__stage-dot"></span>
+              Beta prep
+            </span>
+          </td>
+          <td class="ship-td__progress-wrap">
+            <div class="ship-td__progress-track">
+              <div class="ship-td__progress-fill" style="width:70%;background:var(--ink)"></div>
+            </div>
+          </td>
+          <td class="ship-td__milestone">Signed builds · Q2 2026</td>
+        </tr>
+        <tr>
+          <td class="ship-td__num">03</td>
+          <td class="ship-td__name">AriaDesk</td>
+          <td class="ship-td__platform">macOS (native)</td>
+          <td>
+            <span class="ship-td__stage">
+              <span class="ship-td__stage-dot"></span>
+              In design
+            </span>
+          </td>
+          <td class="ship-td__progress-wrap">
+            <div class="ship-td__progress-track">
+              <div class="ship-td__progress-fill" style="width:15%;background:var(--ink-3)"></div>
+            </div>
+          </td>
+          <td class="ship-td__milestone">UI shell · Q3 2026</td>
+        </tr>
+        <tr>
+          <td class="ship-td__num">04</td>
+          <td class="ship-td__name">Vocemetry</td>
+          <td class="ship-td__platform">iOS</td>
+          <td>
+            <span class="ship-td__stage">
+              <span class="ship-td__stage-dot"></span>
+              Module in test
+            </span>
+          </td>
+          <td class="ship-td__progress-wrap">
+            <div class="ship-td__progress-track">
+              <div class="ship-td__progress-fill" style="width:35%;background:var(--ink)"></div>
+            </div>
+          </td>
+          <td class="ship-td__milestone">Squillo Meter · TestFlight</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- § 04 — FAQ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="section__no">§ 04 &nbsp; Questions</div>
+      <div>
+        <h2 class="section__title">Frequently <em>asked.</em></h2>
+      </div>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary><span class="q-no">Q.01</span><span>Is Kairovo software really local-first? No cloud at all?</span><span class="q-plus">+</span></summary>
+        <div class="faq__body">Yes. Every Kairovo app stores its data in a local SQLite database on your machine. No account is required to use any app. No data is synced to a server. ScoreSifter optionally queries MusicBrainz for works not found in the local catalogue — that's a lookup of a filename, not your data. Everything else is offline.</div>
+      </details>
+      <details>
+        <summary><span class="q-no">Q.02</span><span>What does "one-time pricing" mean in practice?</span><span class="q-plus">+</span></summary>
+        <div class="faq__body">You pay once and the app works indefinitely — on the machines you own, for as long as you want to use it. Updates within the major version are included. If a significantly new major version is released years from now, it may be a separate purchase and will be clearly labelled. There is no subscription, no renewal, no expiry on what you bought.</div>
+      </details>
+      <details>
+        <summary><span class="q-no">Q.03</span><span>Which platforms are supported?</span><span class="q-plus">+</span></summary>
+        <div class="faq__body">ScoreSifter ships for macOS (Apple Silicon + Intel universal), Windows 10/11 x64, and Linux AppImage. Recital Atlas will ship the same. AriaDesk is native macOS only. Vocemetry's platform is TBD. macOS has the most development time and testing for all apps.</div>
+      </details>
+      <details>
+        <summary><span class="q-no">Q.04</span><span>When is Recital Atlas available?</span><span class="q-plus">+</span></summary>
+        <div class="faq__body">Recital Atlas is in beta preparation — feature-complete and in testing. It will be available later in 2026. Sign up for the newsletter to get notified when it launches, including early beta access.</div>
+      </details>
+      <details>
+        <summary><span class="q-no">Q.05</span><span>What's the refund policy?</span><span class="q-plus">+</span></summary>
+        <div class="faq__body">30-day refund, no questions asked, for any paid Kairovo app. Email hello@kairovo.com with your order number. ScoreSifter is free — there's nothing to refund.</div>
+      </details>
+      <details>
+        <summary><span class="q-no">Q.06</span><span>Who is behind Kairovo?</span><span class="q-plus">+</span></summary>
+        <div class="faq__body">Kairovo is run by Derek Hill, based in New Zealand. It's an independent studio — no investors, no team, no growth targets. The apps come out of working closely with singers and teachers and noticing the small frustrations that add up across a career.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- § 05 — NEWSLETTER -->
+<section class="section section--tinted" id="newsletter">
+  <div class="wrap">
+    <div class="newsletter-inner">
+      <div>
+        <h2 class="newsletter__heading">A slow <em>newsletter.</em></h2>
+        <p class="newsletter__body">Sent when something ships — a new app, a significant update, occasionally a note on what's being built and why. No cadence, no content calendar, no filler.</p>
+        <p class="newsletter__body">Kairovo readers get early access to betas and the occasional honest update on what it's like to build niche software for a small audience of serious musicians.</p>
+      </div>
+      <div class="newsletter__form-wrap">
+        <span class="newsletter__form-title">Subscribe — it's free</span>
+        <form class="newsletter__form" action="https://buttondown.com/api/emails/embed-subscribe/kairovo" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/kairovo','popupwindow')">
+          <input class="newsletter__input" type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+          <button type="submit" class="btn btn--primary" style="justify-content:center">Subscribe <span class="arr">→</span></button>
+        </form>
+        <p class="newsletter__note">Sent rarely. Unsubscribe any time. No tracking pixels, no third-party analytics in the emails.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="brand">
+          <span class="k-mark"><span class="k-mark__letter">K</span></span>
+          <span class="brand__name">Kairovo</span>
+        </a>
+        <p>Quiet, durable desktop software for people who work in music. New Zealand.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Apps</h4>
+        <ul>
+          <li><a href="https://scoresifter.com">ScoreSifter</a></li>
+          <li><a href="https://recitalatlas.com">Recital Atlas</a></li>
+          <li><a href="https://ariadesk.com">AriaDesk</a></li>
+          <li><a href="https://vocemetry.com">Vocemetry</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="#principles">Principles</a></li>
+          <li><a href="#shipping">Roadmap</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="mailto:hello@kairovo.com">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="refunds.html">Refunds</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Kairovo</span>
+      <span>KA-000 · Edition 2026.04</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

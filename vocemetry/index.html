@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en" data-app="vm">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vocemetry — Voice analytics for singers</title>
+<meta name="description" content="Voice analytics for singers. Part of the Kairovo suite.">
+<link rel="icon" type="image/svg+xml" href="images/vm-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/7gill/kairovo-websites@main/design-system/kairovo-system.css">
+<style>
+:root {
+  --accent: #4A1A8F;
+  --accent-ink: #ffffff;
+  --paper: #ffffff;
+  --paper-2: #F4F0E6;
+}
+.wrap { max-width:1280px;margin:0 auto;padding:0 40px }
+.topbar { border-bottom:1px solid var(--rule-soft);background:color-mix(in srgb,var(--paper) 86%,transparent);position:sticky;top:0;z-index:50;backdrop-filter:blur(10px) }
+.topbar__inner { display:flex;align-items:center;justify-content:space-between;padding:14px 0 }
+.brand { display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit }
+.brand__name { font-weight:600;letter-spacing:-.01em;font-size:15px }
+.brand__back { font-size:12.5px;color:var(--ink-3);border-left:1px solid var(--rule-soft);padding-left:12px;margin-left:4px;text-decoration:none }
+.brand__back:hover { color:var(--ink) }
+.topbar__right { font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3) }
+.btn { display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border:1px solid var(--ink);border-radius:0;font-size:14px;font-weight:500;background:transparent;color:var(--ink);text-decoration:none;transition:background .15s }
+.btn--accent { background:var(--accent);color:#fff;border-color:var(--accent) }
+.btn--accent:hover { filter:brightness(.92) }
+.btn--ghost { border-color:var(--rule-soft) }
+.btn--ghost:hover { border-color:var(--ink);background:var(--paper-2) }
+.hero { padding:80px 0 96px;border-bottom:1px solid var(--rule-soft) }
+.hero__meta { display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-bottom:56px }
+.hero__meta .cell { display:flex;flex-direction:column;gap:6px }
+.hero__meta .cell .mono { font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3) }
+.hero__meta .cell .v { font-size:14px;color:var(--ink) }
+.hero__body { display:grid;grid-template-columns:1fr 1fr;gap:72px;border-top:1px solid var(--rule-soft);padding-top:56px }
+.hero__h1 { font-family:'Inter Tight',-apple-system,sans-serif;font-size:clamp(44px,6.2vw,72px);line-height:1.08;letter-spacing:-0.028em;font-weight:500;margin:0 0 32px;color:var(--ink) }
+.hero__h1 em { font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--accent) }
+.hero__lede { font-size:17px;line-height:1.55;color:var(--ink-2);max-width:44ch;margin:0 0 32px }
+.status-block { border:1px solid var(--rule-soft);padding:0;align-self:start }
+.status-row { display:flex;flex-direction:column;gap:4px;padding:18px 20px;border-bottom:1px solid var(--rule-soft) }
+.status-row:last-child { border-bottom:0 }
+.status-row__label { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3) }
+.status-row__val { font-size:14px;color:var(--ink) }
+.notify { padding:80px 0;background:var(--paper-2);border-top:1px solid var(--rule-soft) }
+.notify-inner { display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:start }
+.notify-form-wrap { border:1px solid var(--rule-soft);padding:32px;background:var(--paper);display:flex;flex-direction:column;gap:20px }
+.notify-input { font:inherit;font-size:14px;padding:11px 14px;border:1px solid var(--rule-soft);background:var(--paper-2);color:var(--ink);outline:none;border-radius:0;width:100%;transition:border-color .15s;box-sizing:border-box }
+.notify-input:focus { border-color:var(--ink) }
+.notify-input::placeholder { color:var(--ink-4) }
+.suite-strip { padding:64px 0;border-top:1px solid var(--rule-soft) }
+.suite-grid { display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule-soft);border-left:1px solid var(--rule-soft);margin-top:32px }
+.suite-card { border-right:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft);padding:24px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit;transition:background .15s }
+.suite-card:hover { background:var(--paper-2) }
+.suite-card__name { font-size:15px;font-weight:600;letter-spacing:-.01em }
+.suite-card__desc { font-size:13px;color:var(--ink-3);line-height:1.5 }
+.suite-card__tag { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-top:auto }
+.footer { border-top:1px solid var(--rule-soft);background:var(--paper);padding:40px 0 28px }
+.footer__inner { display:flex;justify-content:space-between;align-items:center }
+.footer__left p { margin:8px 0 0;color:var(--ink-3);font-size:13px }
+.footer__links { display:flex;gap:24px }
+.footer__links a { font-size:13px;color:var(--ink-3);text-decoration:none }
+.footer__links a:hover { color:var(--ink) }
+.footer__bottom { margin-top:28px;padding-top:18px;border-top:1px solid var(--rule-softer,#E1DCCE);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between }
+@media (max-width:1040px) {
+  .hero__body,.notify-inner { grid-template-columns:1fr;gap:48px }
+  .hero__meta { grid-template-columns:1fr 1fr;row-gap:18px }
+  .suite-grid { grid-template-columns:1fr 1fr }
+  .footer__inner { flex-direction:column;gap:20px;align-items:flex-start }
+}
+@media (max-width:680px) {
+  .wrap { padding:0 20px }
+  .hero { padding:40px 0 64px }
+  .suite-grid { grid-template-columns:1fr }
+  .footer__bottom { flex-direction:column;gap:6px }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <div style="display:flex;align-items:center;gap:0">
+      <a href="index.html" class="brand">
+        <svg width="32" height="32" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <defs>
+    <clipPath id="roundclip-vm">
+      <rect x="0" y="0" width="2048" height="2048" rx="472"/>
+    </clipPath>
+    <linearGradient id="trigrad-vm" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)">
+      <stop offset="0" style="stop-color:#120828;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#4A1A8F;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="lettergrad-vm" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,0.6192,-0.6192,0,0.088084,-0.6192)">
+      <stop offset="0" style="stop-color:#D4A0FF;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#FFFFFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" rx="472" fill="#1C1B18"/>
+  <polygon points="0,2048 0,273 1775,2048" fill="url(#trigrad-vm)" opacity="0.42" clip-path="url(#roundclip-vm)"/>
+  <g transform="matrix(13.653333,0,0,13.653333,990,1653)">
+    <g transform="matrix(139.160156,0,0,139.160156,-50.248504,0)">
+      <path d="M0.712,-0.662L0.712,-0.644C0.688,-0.64 0.666,-0.627 0.647,-0.605C0.634,-0.589 0.613,-0.551 0.586,-0.491L0.358,0.015L0.342,0.015L0.115,-0.511C0.088,-0.575 0.07,-0.612 0.06,-0.623C0.051,-0.634 0.034,-0.641 0.008,-0.644L0.008,-0.662L0.325,-0.662L0.325,-0.644L0.314,-0.644C0.286,-0.644 0.266,-0.64 0.256,-0.633C0.248,-0.628 0.245,-0.621 0.245,-0.612C0.245,-0.606 0.246,-0.599 0.249,-0.591C0.251,-0.583 0.26,-0.562 0.275,-0.527L0.416,-0.197L0.547,-0.491C0.562,-0.526 0.572,-0.55 0.576,-0.562C0.579,-0.574 0.581,-0.584 0.581,-0.593C0.581,-0.603 0.578,-0.611 0.573,-0.619C0.568,-0.626 0.56,-0.632 0.55,-0.636C0.536,-0.641 0.518,-0.644 0.495,-0.644L0.495,-0.662L0.712,-0.662Z" style="fill:url(#lettergrad-vm);fill-rule:nonzero;"/>
+    </g>
+  </g>
+</svg>
+        <span class="brand__name">Vocemetry</span>
+      </a>
+      <a class="brand__back" href="https://kairovo.com">Kairovo ↩</a>
+    </div>
+    <div class="topbar__right">In development</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__meta">
+      <div class="cell"><span class="mono">Index</span><span class="v">KA-104 / Vocemetry</span></div>
+      <div class="cell"><span class="mono">Platform</span><span class="v">iOS</span></div>
+      <div class="cell"><span class="mono">Status</span><span class="v">In development</span></div>
+      <div class="cell"><span class="mono">Pricing</span><span class="v">One-time purchase</span></div>
+    </div>
+    <div class="hero__body">
+      <div>
+        <h1 class="hero__h1">Voice analytics.<br><em>Always with you.</em></h1>
+        <p class="hero__lede">Vocemetry is a vocal analysis app for classical singers. Three modules — Squillo Meter, Pitch Tracer and Target Tuner — each focused on a distinct aspect of vocal technique. Private, local, always on you. One-time purchase on the App Store.</p>
+        <a href="#notify" class="btn btn--accent">Get notified when it ships →</a>
+      </div>
+      <div class="status-block">
+        <div class="status-row">
+          <span class="status-row__label">Stage</span>
+          <span class="status-row__val">Squillo Meter in testing · 2 modules planned</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Platform</span>
+          <span class="status-row__val">iOS</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Pricing</span>
+          <span class="status-row__val">One-time purchase — no subscription</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Trial</span>
+          <span class="status-row__val">App Store — one-time purchase</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Updates</span>
+          <span class="status-row__val">Included within major version</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section style="padding:80px 0;border-top:1px solid var(--rule-soft)">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:40px;align-items:start;padding-bottom:48px">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0;padding-top:6px">§ 01 &nbsp; Modules</p>
+      <div>
+        <h2 style="font-size:clamp(28px,3.4vw,42px);line-height:1.06;letter-spacing:-.02em;font-weight:500;margin:0 0 16px">Three modules.<br><em style="font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--accent)">One app.</em></h2>
+        <p style="margin:0;color:var(--ink-2);font-size:15.5px;line-height:1.55;max-width:54ch">Each module targets a distinct aspect of classical vocal technique. They share a single calibration and a common session architecture.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-soft);border-left:1px solid var(--rule-soft)">
+      <div style="border-right:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft);padding:32px 28px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:28px;color:var(--rule-soft);font-weight:400;line-height:1">01</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--accent);color:var(--accent)">In testing</span>
+        </div>
+        <h3 style="font-size:17px;font-weight:500;letter-spacing:-.01em;margin:0">Squillo Meter</h3>
+        <p style="margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.6">Measures singer's formant resonance — the high-frequency ring (~2.5–3.5 kHz) that gives operatic voices carrying power. Real-time SFB ratio display, calibrated to your voice, scored against your own baseline.</p>
+      </div>
+      <div style="border-right:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft);padding:32px 28px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:28px;color:var(--rule-soft);font-weight:400;line-height:1">02</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--rule-soft);color:var(--ink-4)">Planned</span>
+        </div>
+        <h3 style="font-size:17px;font-weight:500;letter-spacing:-.01em;margin:0">Pitch Tracer</h3>
+        <p style="margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.6">Pitch accuracy tracking across sessions. Visualise intonation tendencies, compare across repertoire, identify patterns over time. Designed for the singer who already has strong ears and wants objective data.</p>
+      </div>
+      <div style="border-right:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft);padding:32px 28px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:28px;color:var(--rule-soft);font-weight:400;line-height:1">03</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--rule-soft);color:var(--ink-4)">Planned</span>
+        </div>
+        <h3 style="font-size:17px;font-weight:500;letter-spacing:-.01em;margin:0">Target Tuner</h3>
+        <p style="margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.6">Guided training against a specific acoustic target — set the parameter, work toward it in real time. Builds on the calibration and resonance analysis from Squillo Meter with structured practice sessions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="notify" id="notify">
+  <div class="wrap">
+    <div class="notify-inner">
+      <div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 20px">In development</p>
+        <h2 style="font-size:clamp(28px,3vw,42px);font-weight:500;letter-spacing:-.02em;margin:0 0 20px;line-height:1.1">Vocemetry is <em style="font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--accent)">coming.</em></h2>
+        <p style="color:var(--ink-2);font-size:15px;line-height:1.6;margin:0 0 12px;max-width:48ch">Subscribe to the Kairovo newsletter to be notified when Vocemetry ships. Subscribers get early access and launch pricing.</p>
+        <p style="color:var(--ink-2);font-size:15px;line-height:1.6;margin:0;max-width:48ch">The newsletter is sent only when something ships — no filler, no cadence.</p>
+      </div>
+      <div class="notify-form-wrap">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Get notified — it's free</span>
+        <form action="https://buttondown.com/api/emails/embed-subscribe/kairovo" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/kairovo','popupwindow')" style="display:flex;flex-direction:column;gap:10px">
+          <input class="notify-input" type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+          <button type="submit" class="btn btn--accent" style="justify-content:center">Notify me →</button>
+        </form>
+        <p style="font-size:12px;color:var(--ink-4);line-height:1.5;margin:0">Unsubscribe any time. No tracking pixels.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="suite-strip">
+  <div class="wrap">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 4px">Part of</p>
+    <h2 style="font-size:clamp(22px,2.6vw,34px);font-weight:500;letter-spacing:-.02em;margin:0">The Kairovo suite</h2>
+    <div class="suite-grid">
+      <a class="suite-card" href="https://scoresifter.com">
+        <span class="suite-card__name" style="color:#3F7A54">ScoreSifter</span>
+        <span class="suite-card__desc">Batch rename a folder of sheet music PDFs in one pass.</span>
+        <span class="suite-card__tag" style="color:#3F7A54">Live — free</span>
+      </a>
+      <a class="suite-card" href="https://recitalatlas.com">
+        <span class="suite-card__name" style="color:#7A3A46">RecitalAtlas</span>
+        <span class="suite-card__desc">Programme and archive recitals, track repertoire.</span>
+        <span class="suite-card__tag" style="color:#7A3A46">Beta prep</span>
+      </a>
+      <a class="suite-card" href="https://ariadesk.com">
+        <span class="suite-card__name" style="color:#3D5A6C">AriaDesk</span>
+        <span class="suite-card__desc">Voice studio CRM — students, lessons, scheduling, invoicing.</span>
+        <span class="suite-card__tag" style="color:#3D5A6C">In development</span>
+      </a>
+      <a class="suite-card" href="https://vocemetry.com">
+        <span class="suite-card__name" style="color:#4A1A8F">Vocemetry</span>
+        <span class="suite-card__desc">Voice analytics for singers — iOS.</span>
+        <span class="suite-card__tag" style="color:#4A1A8F">In development</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <a href="index.html" class="brand">
+          <svg width="32" height="32" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <defs>
+    <clipPath id="roundclip-vm">
+      <rect x="0" y="0" width="2048" height="2048" rx="472"/>
+    </clipPath>
+    <linearGradient id="trigrad-vm" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)">
+      <stop offset="0" style="stop-color:#120828;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#4A1A8F;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="lettergrad-vm" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,0.6192,-0.6192,0,0.088084,-0.6192)">
+      <stop offset="0" style="stop-color:#D4A0FF;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#FFFFFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" rx="472" fill="#1C1B18"/>
+  <polygon points="0,2048 0,273 1775,2048" fill="url(#trigrad-vm)" opacity="0.42" clip-path="url(#roundclip-vm)"/>
+  <g transform="matrix(13.653333,0,0,13.653333,990,1653)">
+    <g transform="matrix(139.160156,0,0,139.160156,-50.248504,0)">
+      <path d="M0.712,-0.662L0.712,-0.644C0.688,-0.64 0.666,-0.627 0.647,-0.605C0.634,-0.589 0.613,-0.551 0.586,-0.491L0.358,0.015L0.342,0.015L0.115,-0.511C0.088,-0.575 0.07,-0.612 0.06,-0.623C0.051,-0.634 0.034,-0.641 0.008,-0.644L0.008,-0.662L0.325,-0.662L0.325,-0.644L0.314,-0.644C0.286,-0.644 0.266,-0.64 0.256,-0.633C0.248,-0.628 0.245,-0.621 0.245,-0.612C0.245,-0.606 0.246,-0.599 0.249,-0.591C0.251,-0.583 0.26,-0.562 0.275,-0.527L0.416,-0.197L0.547,-0.491C0.562,-0.526 0.572,-0.55 0.576,-0.562C0.579,-0.574 0.581,-0.584 0.581,-0.593C0.581,-0.603 0.578,-0.611 0.573,-0.619C0.568,-0.626 0.56,-0.632 0.55,-0.636C0.536,-0.641 0.518,-0.644 0.495,-0.644L0.495,-0.662L0.712,-0.662Z" style="fill:url(#lettergrad-vm);fill-rule:nonzero;"/>
+    </g>
+  </g>
+</svg>
+          <span class="brand__name">Vocemetry</span>
+        </a>
+        <p>Part of the Kairovo suite — software built for the music room.</p>
+      </div>
+      <div class="footer__links">
+        <a href="https://kairovo.com">Kairovo</a>
+        <a href="https://kairovo.com/privacy.html">Privacy</a>
+        <a href="https://kairovo.com/terms.html">Terms</a>
+        <a href="mailto:hello@kairovo.com">Contact</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Kairovo / Vocemetry</span>
+      <span>KA-104 / Vocemetry · Edition 2026.04</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

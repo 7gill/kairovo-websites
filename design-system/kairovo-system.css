@@ -1,6 +1,6 @@
 /* Kairovo shared design system — hairline Swiss with warmth */
 :root{
-  --paper:#FFFFFF;
+  --paper:#ffffff;
   --paper-2:#F4F0E6;
   --ink:#1C1B18;
   --ink-2:#44433E;
@@ -23,7 +23,7 @@
 }
 
 /* per-app accents (set on <html data-app="...">) */
-html[data-app="scoresifter"]  { --accent:#3F7A54; }  /* forest green — locked 2026-04-24 */
+html[data-app="scoresifter"]  { --accent:#3F7A54; }  /* forest green */
 html[data-app="recitalatlas"] { --accent:#7A3A46; }  /* wine */
 html[data-app="ariadesk"]     { --accent:#3D5A6C; }  /* slate blue */
 html[data-app="vocemetry"]    { --accent:#4A1A8F; }  /* violet */

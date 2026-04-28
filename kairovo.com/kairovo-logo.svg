@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <clipPath id="roundclip">
+      <rect width="400" height="400" rx="88" ry="88"/>
+    </clipPath>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" rx="88" ry="88" fill="#1C1B18"/>
+  
+  <!-- Accent triangle bottom-left — matches app icon pattern -->
+  <polygon points="0,400 0,260 140,400" fill="#2A2925" clip-path="url(#roundclip)"/>
+  
+  <!-- K letterform — geometric construction -->
+  <!-- Vertical stem -->
+  <rect x="110" y="100" width="46" height="200" rx="3" fill="#F4F0E6"/>
+  
+  <!-- Upper arm: diagonal from mid-stem to top-right -->
+  <!-- Goes from (156, 195) to (290, 100) with ~42px stroke weight -->
+  <polygon points="
+    156,155
+    156,200
+    174,200
+    290,118
+    290,100
+    272,100
+  " fill="#F4F0E6"/>
+  
+  <!-- Lower leg: diagonal from mid-stem to bottom-right -->
+  <!-- Goes from (156, 200) to (290, 300) -->
+  <polygon points="
+    156,200
+    156,245
+    272,300
+    290,300
+    290,282
+    174,200
+  " fill="#F4F0E6"/>
+  
+  <!-- Junction fill — clean centre point -->
+  <rect x="156" y="195" width="20" height="10" fill="#F4F0E6"/>
+</svg>

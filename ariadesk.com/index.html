@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en" data-app="ad">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AriaDesk — Voice studio CRM for singing teachers</title>
+<meta name="description" content="Voice studio CRM for singing teachers. Part of the Kairovo suite.">
+<link rel="icon" type="image/svg+xml" href="images/ad-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/7gill/kairovo-websites@main/design-system/kairovo-system.css">
+<style>
+:root {
+  --accent: #3D5A6C;
+  --accent-ink: #ffffff;
+  --paper: #ffffff;
+  --paper-2: #F4F0E6;
+}
+.wrap { max-width:1280px;margin:0 auto;padding:0 40px }
+.topbar { border-bottom:1px solid var(--rule-soft);background:color-mix(in srgb,var(--paper) 86%,transparent);position:sticky;top:0;z-index:50;backdrop-filter:blur(10px) }
+.topbar__inner { display:flex;align-items:center;justify-content:space-between;padding:14px 0 }
+.brand { display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit }
+.brand__name { font-weight:600;letter-spacing:-.01em;font-size:15px }
+.brand__back { font-size:12.5px;color:var(--ink-3);border-left:1px solid var(--rule-soft);padding-left:12px;margin-left:4px;text-decoration:none }
+.brand__back:hover { color:var(--ink) }
+.topbar__right { font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3) }
+.btn { display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border:1px solid var(--ink);border-radius:0;font-size:14px;font-weight:500;background:transparent;color:var(--ink);text-decoration:none;transition:background .15s }
+.btn--accent { background:var(--accent);color:#fff;border-color:var(--accent) }
+.btn--accent:hover { filter:brightness(.92) }
+.btn--ghost { border-color:var(--rule-soft) }
+.btn--ghost:hover { border-color:var(--ink);background:var(--paper-2) }
+.hero { padding:80px 0 96px;border-bottom:1px solid var(--rule-soft) }
+.hero__meta { display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-bottom:56px }
+.hero__meta .cell { display:flex;flex-direction:column;gap:6px }
+.hero__meta .cell .mono { font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3) }
+.hero__meta .cell .v { font-size:14px;color:var(--ink) }
+.hero__body { display:grid;grid-template-columns:1fr 1fr;gap:72px;border-top:1px solid var(--rule-soft);padding-top:56px }
+.hero__h1 { font-family:'Inter Tight',-apple-system,sans-serif;font-size:clamp(44px,6.2vw,72px);line-height:1.08;letter-spacing:-0.028em;font-weight:500;margin:0 0 32px;color:var(--ink) }
+.hero__h1 em { font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--accent) }
+.hero__lede { font-size:17px;line-height:1.55;color:var(--ink-2);max-width:44ch;margin:0 0 32px }
+.status-block { border:1px solid var(--rule-soft);padding:0;align-self:start }
+.status-row { display:flex;flex-direction:column;gap:4px;padding:18px 20px;border-bottom:1px solid var(--rule-soft) }
+.status-row:last-child { border-bottom:0 }
+.status-row__label { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3) }
+.status-row__val { font-size:14px;color:var(--ink) }
+.notify { padding:80px 0;background:var(--paper-2);border-top:1px solid var(--rule-soft) }
+.notify-inner { display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:start }
+.notify-form-wrap { border:1px solid var(--rule-soft);padding:32px;background:var(--paper);display:flex;flex-direction:column;gap:20px }
+.notify-input { font:inherit;font-size:14px;padding:11px 14px;border:1px solid var(--rule-soft);background:var(--paper-2);color:var(--ink);outline:none;border-radius:0;width:100%;transition:border-color .15s;box-sizing:border-box }
+.notify-input:focus { border-color:var(--ink) }
+.notify-input::placeholder { color:var(--ink-4) }
+.suite-strip { padding:64px 0;border-top:1px solid var(--rule-soft) }
+.suite-grid { display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule-soft);border-left:1px solid var(--rule-soft);margin-top:32px }
+.suite-card { border-right:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft);padding:24px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit;transition:background .15s }
+.suite-card:hover { background:var(--paper-2) }
+.suite-card__name { font-size:15px;font-weight:600;letter-spacing:-.01em }
+.suite-card__desc { font-size:13px;color:var(--ink-3);line-height:1.5 }
+.suite-card__tag { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-top:auto }
+.footer { border-top:1px solid var(--rule-soft);background:var(--paper);padding:40px 0 28px }
+.footer__inner { display:flex;justify-content:space-between;align-items:center }
+.footer__left p { margin:8px 0 0;color:var(--ink-3);font-size:13px }
+.footer__links { display:flex;gap:24px }
+.footer__links a { font-size:13px;color:var(--ink-3);text-decoration:none }
+.footer__links a:hover { color:var(--ink) }
+.footer__bottom { margin-top:28px;padding-top:18px;border-top:1px solid var(--rule-softer,#E1DCCE);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between }
+@media (max-width:1040px) {
+  .hero__body,.notify-inner { grid-template-columns:1fr;gap:48px }
+  .hero__meta { grid-template-columns:1fr 1fr;row-gap:18px }
+  .suite-grid { grid-template-columns:1fr 1fr }
+  .footer__inner { flex-direction:column;gap:20px;align-items:flex-start }
+}
+@media (max-width:680px) {
+  .wrap { padding:0 20px }
+  .hero { padding:40px 0 64px }
+  .suite-grid { grid-template-columns:1fr }
+  .footer__bottom { flex-direction:column;gap:6px }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <div style="display:flex;align-items:center;gap:0">
+      <a href="index.html" class="brand">
+        <svg width="32" height="32" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <path d="M2048,472L2048,1576C2048,1836.504 1836.504,2048 1576,2048L472,2048C211.496,2048 0,1836.504 0,1576L0,472C0,211.496 211.496,0 472,0L1576,0C1836.504,0 2048,211.496 2048,472Z" style="fill:rgb(28,27,24);"/>
+    <clipPath id="_clip1-ad">
+        <path d="M2048,472L2048,1576C2048,1836.504 1836.504,2048 1576,2048L472,2048C211.496,2048 0,1836.504 0,1576L0,472C0,211.496 211.496,0 472,0L1576,0C1836.504,0 2048,211.496 2048,472Z"/>
+    </clipPath>
+    <g clip-path="url(#_clip1-ad)">
+        <path d="M0,2048L0,273L1775,2048L0,2048Z" style="fill:url(#_Linear2-ad);"/>
+    </g>
+    <g transform="matrix(6.223841,0,0,6.223841,-5675.106128,-8930.045855)">
+        <path d="M1185.564,1700.692L1076.861,1700.692L1076.861,1689.723C1081.923,1689.348 1087.876,1688.434 1094.72,1686.981C1101.564,1685.528 1104.986,1683.723 1104.986,1681.567C1104.986,1680.817 1104.915,1679.973 1104.775,1679.036C1104.634,1678.098 1104.236,1676.833 1103.579,1675.239L1086.564,1633.895L1017.658,1633.895C1016.064,1637.739 1014.306,1642.239 1012.384,1647.395C1010.462,1652.551 1008.798,1657.145 1007.392,1661.176C1005.611,1666.426 1004.556,1670.223 1004.228,1672.567C1003.9,1674.911 1003.736,1676.551 1003.736,1677.489C1003.736,1680.489 1006.009,1683.044 1010.556,1685.153C1015.103,1687.262 1022.673,1688.786 1033.267,1689.723L1033.267,1700.692L951.423,1700.692L951.423,1689.723C954.517,1689.536 958.009,1689.044 961.9,1688.247C965.79,1687.45 968.861,1686.348 971.111,1684.942C974.954,1682.692 978.212,1679.926 980.884,1676.645C983.556,1673.364 985.783,1669.473 987.564,1664.973C998.439,1638.63 1009.337,1612.239 1020.259,1585.801C1031.181,1559.364 1043.251,1530.208 1056.47,1498.333L1084.595,1498.333C1102.97,1543.52 1117.361,1579.239 1127.767,1605.489C1138.173,1631.739 1147.033,1653.489 1154.345,1670.739C1155.564,1673.551 1157.111,1676.106 1158.986,1678.403C1160.861,1680.7 1163.533,1682.88 1167.001,1684.942C1169.626,1686.442 1172.673,1687.567 1176.142,1688.317C1179.611,1689.067 1182.751,1689.536 1185.564,1689.723L1185.564,1700.692ZM1080.798,1619.973L1051.829,1547.692L1023.283,1619.973L1080.798,1619.973Z" style="fill:url(#_Linear3-ad);fill-rule:nonzero;"/>
+    </g>
+    <defs>
+        <linearGradient id="_Linear2-ad" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)"><stop offset="0" style="stop-color:rgb(15,30,38);stop-opacity:0.42"/><stop offset="1" style="stop-color:rgb(61,90,108);stop-opacity:0.42"/></linearGradient>
+        <linearGradient id="_Linear3-ad" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,189.276322,-209.50849,0,999.36241,1511.415798)"><stop offset="0" style="stop-color:rgb(192,212,220);stop-opacity:1"/><stop offset="1" style="stop-color:white;stop-opacity:1"/></linearGradient>
+    </defs>
+</svg>
+        <span class="brand__name">AriaDesk</span>
+      </a>
+      <a class="brand__back" href="https://kairovo.com">Kairovo ↩</a>
+    </div>
+    <div class="topbar__right">In development</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__meta">
+      <div class="cell"><span class="mono">Index</span><span class="v">KA-103 / AriaDesk</span></div>
+      <div class="cell"><span class="mono">Platform</span><span class="v">macOS (native)</span></div>
+      <div class="cell"><span class="mono">Status</span><span class="v">In development</span></div>
+      <div class="cell"><span class="mono">Pricing</span><span class="v">One-time purchase</span></div>
+    </div>
+    <div class="hero__body">
+      <div>
+        <h1 class="hero__h1">Your voice studio.<br><em>Finally organised.</em></h1>
+        <p class="hero__lede">AriaDesk is a native macOS app for singing teachers who want to manage students, lessons, scheduling and invoicing from a single local app — without adopting a cloud platform or a subscription that funds someone else's growth.</p>
+        <a href="#notify" class="btn btn--accent">Get notified when it ships →</a>
+      </div>
+      <div class="status-block">
+        <div class="status-row">
+          <span class="status-row__label">Stage</span>
+          <span class="status-row__val">In development</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Platform</span>
+          <span class="status-row__val">macOS (native)</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Pricing</span>
+          <span class="status-row__val">One-time purchase — no subscription</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Trial</span>
+          <span class="status-row__val">30 days, fully functional</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Updates</span>
+          <span class="status-row__val">Included within major version</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="notify" id="notify">
+  <div class="wrap">
+    <div class="notify-inner">
+      <div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 20px">In development</p>
+        <h2 style="font-size:clamp(28px,3vw,42px);font-weight:500;letter-spacing:-.02em;margin:0 0 20px;line-height:1.1">AriaDesk is <em style="font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--accent)">coming.</em></h2>
+        <p style="color:var(--ink-2);font-size:15px;line-height:1.6;margin:0 0 12px;max-width:48ch">Subscribe to the Kairovo newsletter to be notified when AriaDesk ships. Subscribers get early access and launch pricing.</p>
+        <p style="color:var(--ink-2);font-size:15px;line-height:1.6;margin:0;max-width:48ch">The newsletter is sent only when something ships — no filler, no cadence.</p>
+      </div>
+      <div class="notify-form-wrap">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Get notified — it's free</span>
+        <form action="https://buttondown.com/api/emails/embed-subscribe/kairovo" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/kairovo','popupwindow')" style="display:flex;flex-direction:column;gap:10px">
+          <input class="notify-input" type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+          <button type="submit" class="btn btn--accent" style="justify-content:center">Notify me →</button>
+        </form>
+        <p style="font-size:12px;color:var(--ink-4);line-height:1.5;margin:0">Unsubscribe any time. No tracking pixels.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="suite-strip">
+  <div class="wrap">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 4px">Part of</p>
+    <h2 style="font-size:clamp(22px,2.6vw,34px);font-weight:500;letter-spacing:-.02em;margin:0">The Kairovo suite</h2>
+    <div class="suite-grid">
+      <a class="suite-card" href="https://scoresifter.com">
+        <span class="suite-card__name" style="color:#3F7A54">ScoreSifter</span>
+        <span class="suite-card__desc">Batch rename a folder of sheet music PDFs in one pass.</span>
+        <span class="suite-card__tag" style="color:#3F7A54">Live — free</span>
+      </a>
+      <a class="suite-card" href="https://recitalatlas.com">
+        <span class="suite-card__name" style="color:#7A3A46">RecitalAtlas</span>
+        <span class="suite-card__desc">Programme and archive recitals, track repertoire.</span>
+        <span class="suite-card__tag" style="color:#7A3A46">Beta prep</span>
+      </a>
+      <a class="suite-card" href="https://ariadesk.com">
+        <span class="suite-card__name" style="color:#3D5A6C">AriaDesk</span>
+        <span class="suite-card__desc">Voice studio CRM — students, lessons, scheduling, invoicing.</span>
+        <span class="suite-card__tag" style="color:#3D5A6C">In development</span>
+      </a>
+      <a class="suite-card" href="https://vocemetry.com">
+        <span class="suite-card__name" style="color:#4A1A8F">Vocemetry</span>
+        <span class="suite-card__desc">Voice analytics for singers — iOS.</span>
+        <span class="suite-card__tag" style="color:#4A1A8F">In development</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <a href="index.html" class="brand">
+          <svg width="32" height="32" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <path d="M2048,472L2048,1576C2048,1836.504 1836.504,2048 1576,2048L472,2048C211.496,2048 0,1836.504 0,1576L0,472C0,211.496 211.496,0 472,0L1576,0C1836.504,0 2048,211.496 2048,472Z" style="fill:rgb(28,27,24);"/>
+    <clipPath id="_clip1-ad">
+        <path d="M2048,472L2048,1576C2048,1836.504 1836.504,2048 1576,2048L472,2048C211.496,2048 0,1836.504 0,1576L0,472C0,211.496 211.496,0 472,0L1576,0C1836.504,0 2048,211.496 2048,472Z"/>
+    </clipPath>
+    <g clip-path="url(#_clip1-ad)">
+        <path d="M0,2048L0,273L1775,2048L0,2048Z" style="fill:url(#_Linear2-ad);"/>
+    </g>
+    <g transform="matrix(6.223841,0,0,6.223841,-5675.106128,-8930.045855)">
+        <path d="M1185.564,1700.692L1076.861,1700.692L1076.861,1689.723C1081.923,1689.348 1087.876,1688.434 1094.72,1686.981C1101.564,1685.528 1104.986,1683.723 1104.986,1681.567C1104.986,1680.817 1104.915,1679.973 1104.775,1679.036C1104.634,1678.098 1104.236,1676.833 1103.579,1675.239L1086.564,1633.895L1017.658,1633.895C1016.064,1637.739 1014.306,1642.239 1012.384,1647.395C1010.462,1652.551 1008.798,1657.145 1007.392,1661.176C1005.611,1666.426 1004.556,1670.223 1004.228,1672.567C1003.9,1674.911 1003.736,1676.551 1003.736,1677.489C1003.736,1680.489 1006.009,1683.044 1010.556,1685.153C1015.103,1687.262 1022.673,1688.786 1033.267,1689.723L1033.267,1700.692L951.423,1700.692L951.423,1689.723C954.517,1689.536 958.009,1689.044 961.9,1688.247C965.79,1687.45 968.861,1686.348 971.111,1684.942C974.954,1682.692 978.212,1679.926 980.884,1676.645C983.556,1673.364 985.783,1669.473 987.564,1664.973C998.439,1638.63 1009.337,1612.239 1020.259,1585.801C1031.181,1559.364 1043.251,1530.208 1056.47,1498.333L1084.595,1498.333C1102.97,1543.52 1117.361,1579.239 1127.767,1605.489C1138.173,1631.739 1147.033,1653.489 1154.345,1670.739C1155.564,1673.551 1157.111,1676.106 1158.986,1678.403C1160.861,1680.7 1163.533,1682.88 1167.001,1684.942C1169.626,1686.442 1172.673,1687.567 1176.142,1688.317C1179.611,1689.067 1182.751,1689.536 1185.564,1689.723L1185.564,1700.692ZM1080.798,1619.973L1051.829,1547.692L1023.283,1619.973L1080.798,1619.973Z" style="fill:url(#_Linear3-ad);fill-rule:nonzero;"/>
+    </g>
+    <defs>
+        <linearGradient id="_Linear2-ad" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)"><stop offset="0" style="stop-color:rgb(15,30,38);stop-opacity:0.42"/><stop offset="1" style="stop-color:rgb(61,90,108);stop-opacity:0.42"/></linearGradient>
+        <linearGradient id="_Linear3-ad" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,189.276322,-209.50849,0,999.36241,1511.415798)"><stop offset="0" style="stop-color:rgb(192,212,220);stop-opacity:1"/><stop offset="1" style="stop-color:white;stop-opacity:1"/></linearGradient>
+    </defs>
+</svg>
+          <span class="brand__name">AriaDesk</span>
+        </a>
+        <p>Part of the Kairovo suite — software built for the music room.</p>
+      </div>
+      <div class="footer__links">
+        <a href="https://kairovo.com">Kairovo</a>
+        <a href="https://kairovo.com/privacy.html">Privacy</a>
+        <a href="https://kairovo.com/terms.html">Terms</a>
+        <a href="mailto:hello@kairovo.com">Contact</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Kairovo / AriaDesk</span>
+      <span>KA-103 / AriaDesk · Edition 2026.04</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

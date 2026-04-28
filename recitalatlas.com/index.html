@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en" data-app="ra">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RecitalAtlas — Repertoire manager and recital planner</title>
+<meta name="description" content="Repertoire manager and recital planner for singers, teachers and répétiteurs. Part of the Kairovo suite.">
+<link rel="icon" type="image/svg+xml" href="images/ra-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/7gill/kairovo-websites@main/design-system/kairovo-system.css">
+<style>
+:root {
+  --accent: #7A3A46;
+  --accent-ink: #ffffff;
+  --paper: #ffffff;
+  --paper-2: #F4F0E6;
+}
+.wrap { max-width:1280px;margin:0 auto;padding:0 40px }
+.topbar { border-bottom:1px solid var(--rule-soft);background:color-mix(in srgb,var(--paper) 86%,transparent);position:sticky;top:0;z-index:50;backdrop-filter:blur(10px) }
+.topbar__inner { display:flex;align-items:center;justify-content:space-between;padding:14px 0 }
+.brand { display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit }
+.brand__name { font-weight:600;letter-spacing:-.01em;font-size:15px }
+.brand__back { font-size:12.5px;color:var(--ink-3);border-left:1px solid var(--rule-soft);padding-left:12px;margin-left:4px;text-decoration:none }
+.brand__back:hover { color:var(--ink) }
+.topbar__right { font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3) }
+.btn { display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border:1px solid var(--ink);border-radius:0;font-size:14px;font-weight:500;background:transparent;color:var(--ink);text-decoration:none;transition:background .15s }
+.btn--accent { background:var(--accent);color:#fff;border-color:var(--accent) }
+.btn--accent:hover { filter:brightness(.92) }
+.btn--ghost { border-color:var(--rule-soft) }
+.btn--ghost:hover { border-color:var(--ink);background:var(--paper-2) }
+.hero { padding:80px 0 96px;border-bottom:1px solid var(--rule-soft) }
+.hero__meta { display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-bottom:56px }
+.hero__meta .cell { display:flex;flex-direction:column;gap:6px }
+.hero__meta .cell .mono { font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3) }
+.hero__meta .cell .v { font-size:14px;color:var(--ink) }
+.hero__body { display:grid;grid-template-columns:1fr 1fr;gap:72px;border-top:1px solid var(--rule-soft);padding-top:56px }
+.hero__h1 { font-family:'Inter Tight',-apple-system,sans-serif;font-size:clamp(44px,6.2vw,72px);line-height:1.08;letter-spacing:-0.028em;font-weight:500;margin:0 0 32px;color:var(--ink) }
+.hero__h1 em { font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--accent) }
+.hero__lede { font-size:17px;line-height:1.55;color:var(--ink-2);max-width:44ch;margin:0 0 32px }
+.status-block { border:1px solid var(--rule-soft);padding:0;align-self:start }
+.status-row { display:flex;flex-direction:column;gap:4px;padding:18px 20px;border-bottom:1px solid var(--rule-soft) }
+.status-row:last-child { border-bottom:0 }
+.status-row__label { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3) }
+.status-row__val { font-size:14px;color:var(--ink) }
+.notify { padding:80px 0;background:var(--paper-2);border-top:1px solid var(--rule-soft) }
+.notify-inner { display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:start }
+.notify-form-wrap { border:1px solid var(--rule-soft);padding:32px;background:var(--paper);display:flex;flex-direction:column;gap:20px }
+.notify-input { font:inherit;font-size:14px;padding:11px 14px;border:1px solid var(--rule-soft);background:var(--paper-2);color:var(--ink);outline:none;border-radius:0;width:100%;transition:border-color .15s;box-sizing:border-box }
+.notify-input:focus { border-color:var(--ink) }
+.notify-input::placeholder { color:var(--ink-4) }
+.suite-strip { padding:64px 0;border-top:1px solid var(--rule-soft) }
+.suite-grid { display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule-soft);border-left:1px solid var(--rule-soft);margin-top:32px }
+.suite-card { border-right:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft);padding:24px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit;transition:background .15s }
+.suite-card:hover { background:var(--paper-2) }
+.suite-card__name { font-size:15px;font-weight:600;letter-spacing:-.01em }
+.suite-card__desc { font-size:13px;color:var(--ink-3);line-height:1.5 }
+.suite-card__tag { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-top:auto }
+.footer { border-top:1px solid var(--rule-soft);background:var(--paper);padding:40px 0 28px }
+.footer__inner { display:flex;justify-content:space-between;align-items:center }
+.footer__left p { margin:8px 0 0;color:var(--ink-3);font-size:13px }
+.footer__links { display:flex;gap:24px }
+.footer__links a { font-size:13px;color:var(--ink-3);text-decoration:none }
+.footer__links a:hover { color:var(--ink) }
+.footer__bottom { margin-top:28px;padding-top:18px;border-top:1px solid var(--rule-softer,#E1DCCE);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between }
+@media (max-width:1040px) {
+  .hero__body,.notify-inner { grid-template-columns:1fr;gap:48px }
+  .hero__meta { grid-template-columns:1fr 1fr;row-gap:18px }
+  .suite-grid { grid-template-columns:1fr 1fr }
+  .footer__inner { flex-direction:column;gap:20px;align-items:flex-start }
+}
+@media (max-width:680px) {
+  .wrap { padding:0 20px }
+  .hero { padding:40px 0 64px }
+  .suite-grid { grid-template-columns:1fr }
+  .footer__bottom { flex-direction:column;gap:6px }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <div style="display:flex;align-items:center;gap:0">
+      <a href="index.html" class="brand">
+        <svg width="32" height="32" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <defs>
+    <clipPath id="roundclip-ra">
+      <rect x="0" y="0" width="2048" height="2048" rx="472"/>
+    </clipPath>
+    <linearGradient id="trigrad-ra" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)">
+      <stop offset="0" style="stop-color:#3D1A20;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#7A3A46;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="lettergrad-ra" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,0.6192,-0.6192,0,0.073684,-0.6192)">
+      <stop offset="0" style="stop-color:#ECC4CC;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#FFFFFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" rx="472" fill="#1C1B18"/>
+  <polygon points="0,2048 0,273 1775,2048" fill="url(#trigrad-ra)" opacity="0.42" clip-path="url(#roundclip-ra)"/>
+  <g transform="matrix(13.653333,0,0,13.653333,998.023438,1653.003906)">
+    <g transform="matrix(139.160156,0,0,139.160156,-50.248504,0)">
+      <path d="M0.266,-0.302L0.266,-0.116C0.266,-0.08 0.268,-0.058 0.272,-0.049C0.277,-0.039 0.284,-0.032 0.295,-0.026C0.306,-0.021 0.327,-0.018 0.357,-0.018L0.357,-0L0.019,-0L0.019,-0.018C0.049,-0.018 0.07,-0.021 0.081,-0.027C0.092,-0.032 0.099,-0.04 0.104,-0.049C0.108,-0.058 0.11,-0.08 0.11,-0.116L0.11,-0.546C0.11,-0.582 0.108,-0.604 0.104,-0.614C0.099,-0.623 0.092,-0.63 0.081,-0.636C0.069,-0.641 0.049,-0.644 0.019,-0.644L0.019,-0.662L0.326,-0.662C0.406,-0.662 0.465,-0.657 0.502,-0.646C0.539,-0.634 0.569,-0.614 0.593,-0.584C0.616,-0.554 0.628,-0.52 0.628,-0.479C0.628,-0.431 0.61,-0.39 0.575,-0.358C0.553,-0.338 0.521,-0.323 0.481,-0.313L0.64,-0.089C0.661,-0.06 0.676,-0.042 0.685,-0.035C0.698,-0.025 0.713,-0.019 0.731,-0.018L0.731,-0L0.522,-0L0.309,-0.302L0.266,-0.302ZM0.266,-0.626L0.266,-0.336L0.293,-0.336C0.339,-0.336 0.373,-0.341 0.395,-0.349C0.417,-0.357 0.435,-0.372 0.448,-0.394C0.461,-0.415 0.467,-0.444 0.467,-0.479C0.467,-0.529 0.455,-0.566 0.432,-0.59C0.408,-0.614 0.37,-0.626 0.318,-0.626L0.266,-0.626Z" style="fill:url(#lettergrad-ra);fill-rule:nonzero;"/>
+    </g>
+  </g>
+</svg>
+        <span class="brand__name">RecitalAtlas</span>
+      </a>
+      <a class="brand__back" href="https://kairovo.com">Kairovo ↩</a>
+    </div>
+    <div class="topbar__right">In development</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__meta">
+      <div class="cell"><span class="mono">Index</span><span class="v">KA-102 / RecitalAtlas</span></div>
+      <div class="cell"><span class="mono">Platform</span><span class="v">macOS · Windows · Linux</span></div>
+      <div class="cell"><span class="mono">Status</span><span class="v">In development</span></div>
+      <div class="cell"><span class="mono">Pricing</span><span class="v">One-time purchase</span></div>
+    </div>
+    <div class="hero__body">
+      <div>
+        <h1 class="hero__h1">Your repertoire.<br><em>Finally at hand.</em></h1>
+        <p class="hero__lede">RecitalAtlas is a desktop app for singers, teachers and répétiteurs to manage repertoire, plan recital programmes and archive performances. Local-first — your data is a SQLite file on your own machine. No cloud, no accounts, no subscription.</p>
+        <a href="#notify" class="btn btn--accent">Get notified when it ships →</a>
+      </div>
+      <div class="status-block">
+        <div class="status-row">
+          <span class="status-row__label">Stage</span>
+          <span class="status-row__val">In development</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Platform</span>
+          <span class="status-row__val">macOS · Windows · Linux</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Pricing</span>
+          <span class="status-row__val">One-time purchase — no subscription</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Trial</span>
+          <span class="status-row__val">30 days, fully functional</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row__label">Updates</span>
+          <span class="status-row__val">Included within major version</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="notify" id="notify">
+  <div class="wrap">
+    <div class="notify-inner">
+      <div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 20px">In development</p>
+        <h2 style="font-size:clamp(28px,3vw,42px);font-weight:500;letter-spacing:-.02em;margin:0 0 20px;line-height:1.1">RecitalAtlas is <em style="font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--accent)">coming.</em></h2>
+        <p style="color:var(--ink-2);font-size:15px;line-height:1.6;margin:0 0 12px;max-width:48ch">Subscribe to the Kairovo newsletter to be notified when RecitalAtlas ships. Subscribers get early access and launch pricing.</p>
+        <p style="color:var(--ink-2);font-size:15px;line-height:1.6;margin:0;max-width:48ch">The newsletter is sent only when something ships — no filler, no cadence.</p>
+      </div>
+      <div class="notify-form-wrap">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Get notified — it's free</span>
+        <form action="https://buttondown.com/api/emails/embed-subscribe/kairovo" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/kairovo','popupwindow')" style="display:flex;flex-direction:column;gap:10px">
+          <input class="notify-input" type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+          <button type="submit" class="btn btn--accent" style="justify-content:center">Notify me →</button>
+        </form>
+        <p style="font-size:12px;color:var(--ink-4);line-height:1.5;margin:0">Unsubscribe any time. No tracking pixels.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="suite-strip">
+  <div class="wrap">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 4px">Part of</p>
+    <h2 style="font-size:clamp(22px,2.6vw,34px);font-weight:500;letter-spacing:-.02em;margin:0">The Kairovo suite</h2>
+    <div class="suite-grid">
+      <a class="suite-card" href="https://scoresifter.com">
+        <span class="suite-card__name" style="color:#3F7A54">ScoreSifter</span>
+        <span class="suite-card__desc">Batch rename a folder of sheet music PDFs in one pass.</span>
+        <span class="suite-card__tag" style="color:#3F7A54">Live — free</span>
+      </a>
+      <a class="suite-card" href="https://recitalatlas.com">
+        <span class="suite-card__name" style="color:#7A3A46">RecitalAtlas</span>
+        <span class="suite-card__desc">Programme and archive recitals, track repertoire.</span>
+        <span class="suite-card__tag" style="color:#7A3A46">In development</span>
+      </a>
+      <a class="suite-card" href="https://ariadesk.com">
+        <span class="suite-card__name" style="color:#3D5A6C">AriaDesk</span>
+        <span class="suite-card__desc">Voice studio CRM — students, lessons, scheduling, invoicing.</span>
+        <span class="suite-card__tag" style="color:#3D5A6C">In development</span>
+      </a>
+      <a class="suite-card" href="https://vocemetry.com">
+        <span class="suite-card__name" style="color:#4A1A8F">Vocemetry</span>
+        <span class="suite-card__desc">Voice analytics for singers — iOS.</span>
+        <span class="suite-card__tag" style="color:#4A1A8F">In development</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <a href="index.html" class="brand">
+          <svg width="32" height="32" viewBox="0 0 2048 2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <defs>
+    <clipPath id="roundclip-ra-footer">
+      <rect x="0" y="0" width="2048" height="2048" rx="472"/>
+    </clipPath>
+    <linearGradient id="trigrad-ra-footer" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1502,1502,0,273,2048)">
+      <stop offset="0" style="stop-color:#3D1A20;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#7A3A46;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="lettergrad-ra-footer" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,0.6192,-0.6192,0,0.073684,-0.6192)">
+      <stop offset="0" style="stop-color:#ECC4CC;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#FFFFFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2048" height="2048" rx="472" fill="#1C1B18"/>
+  <polygon points="0,2048 0,273 1775,2048" fill="url(#trigrad-ra-footer)" opacity="0.42" clip-path="url(#roundclip-ra-footer)"/>
+  <g transform="matrix(13.653333,0,0,13.653333,998.023438,1653.003906)">
+    <g transform="matrix(139.160156,0,0,139.160156,-50.248504,0)">
+      <path d="M0.266,-0.302L0.266,-0.116C0.266,-0.08 0.268,-0.058 0.272,-0.049C0.277,-0.039 0.284,-0.032 0.295,-0.026C0.306,-0.021 0.327,-0.018 0.357,-0.018L0.357,-0L0.019,-0L0.019,-0.018C0.049,-0.018 0.07,-0.021 0.081,-0.027C0.092,-0.032 0.099,-0.04 0.104,-0.049C0.108,-0.058 0.11,-0.08 0.11,-0.116L0.11,-0.546C0.11,-0.582 0.108,-0.604 0.104,-0.614C0.099,-0.623 0.092,-0.63 0.081,-0.636C0.069,-0.641 0.049,-0.644 0.019,-0.644L0.019,-0.662L0.326,-0.662C0.406,-0.662 0.465,-0.657 0.502,-0.646C0.539,-0.634 0.569,-0.614 0.593,-0.584C0.616,-0.554 0.628,-0.52 0.628,-0.479C0.628,-0.431 0.61,-0.39 0.575,-0.358C0.553,-0.338 0.521,-0.323 0.481,-0.313L0.64,-0.089C0.661,-0.06 0.676,-0.042 0.685,-0.035C0.698,-0.025 0.713,-0.019 0.731,-0.018L0.731,-0L0.522,-0L0.309,-0.302L0.266,-0.302ZM0.266,-0.626L0.266,-0.336L0.293,-0.336C0.339,-0.336 0.373,-0.341 0.395,-0.349C0.417,-0.357 0.435,-0.372 0.448,-0.394C0.461,-0.415 0.467,-0.444 0.467,-0.479C0.467,-0.529 0.455,-0.566 0.432,-0.59C0.408,-0.614 0.37,-0.626 0.318,-0.626L0.266,-0.626Z" style="fill:url(#lettergrad-ra-footer);fill-rule:nonzero;"/>
+    </g>
+  </g>
+</svg>
+          <span class="brand__name">RecitalAtlas</span>
+        </a>
+        <p>Part of the Kairovo suite — software built for the music room.</p>
+      </div>
+      <div class="footer__links">
+        <a href="https://kairovo.com">Kairovo</a>
+        <a href="https://kairovo.com/privacy.html">Privacy</a>
+        <a href="https://kairovo.com/terms.html">Terms</a>
+        <a href="mailto:hello@kairovo.com">Contact</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Kairovo / RecitalAtlas</span>
+      <span>KA-102 / RecitalAtlas · Edition 2026.04</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

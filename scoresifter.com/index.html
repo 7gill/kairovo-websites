@@ -324,7 +324,7 @@
           <li>Updates itself — it asks first</li>
           <li>Optional: page reading with Apple Intelligence (macOS 26, on Macs that have it)</li>
         </ul>
-        <form id="get" class="get" action="https://buttondown.com/api/emails/embed-subscribe/kairovo" method="post" target="bd-frame"
+        <form id="get" class="get" action="https://buttondown.com/api/emails/embed-subscribe/kairovo" method="post" target="_blank"
           style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
           <label for="get-email" style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Your email</label>
           <input id="get-email" type="email" name="email" placeholder="your@email.com" required autocomplete="email"
@@ -333,12 +333,12 @@
           <input type="hidden" name="embed" value="1">
           <button type="submit" class="btn btn--accent">Download for Mac <span class="arr">↓</span></button>
         </form>
-        <iframe name="bd-frame" title="Email sign-up" hidden></iframe>
-        <p style="margin-top:12px;font-size:12.5px;color:var(--ink-3);line-height:1.5">The download starts straight away. We'll email you once to ask if you'd like occasional news of ScoreSifter and the other Kairovo apps; if you don't confirm, you're not added. <a href="privacy.html">Privacy</a></p>
+        <p style="margin-top:12px;font-size:12.5px;color:var(--ink-3);line-height:1.5">The download starts straight away; Buttondown opens in a new tab. We'll email you once to ask if you'd like occasional news of ScoreSifter and the other Kairovo apps; if you don't confirm, you're not added. <a href="privacy.html">Privacy</a></p>
         <p style="margin-top:6px;font-size:12.5px;color:var(--ink-3);line-height:1.5">Signed and notarised by Apple — opens without a security warning.</p>
         <script>
-          // The address goes to Buttondown (in the hidden frame); the file is
-          // public either way — the form is a request, not a lock.
+          // Buttondown's answer opens in a new tab (it may ask for a CAPTCHA or a
+          // corrected address: never hidden); this tab starts the download.
+          // The file is public either way — the form is a request, not a lock.
           (function () {
             var DMG = "https://downloads.scoresifter.com/ScoreSifter-2.0.0.dmg";
             document.getElementById("get").addEventListener("submit", function () {

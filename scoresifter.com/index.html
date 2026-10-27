@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ScoreSifter — Your sheet music library, finally organised</title>
-<meta name="description" content="ScoreSifter renames your PDF sheet music against a 43k-work catalogue and writes forScore-ready metadata into every file. Free for macOS, Windows and Linux.">
+<meta name="description" content="ScoreSifter renames your PDF sheet music against a catalogue of 54,000 pieces, reads page one when the filename says nothing, and writes forScore-ready metadata into every file. Free for Mac.">
 <link rel="icon" type="image/svg+xml" href="images/app-icon.svg">
 <link rel="apple-touch-icon" href="images/app-icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,7 @@
       <a href="#newsletter">Newsletter</a>
     </nav>
     <div class="topbar__right">
-      <span class="topbar__live"><span class="dot"></span>v1.1 — free</span>
+      <span class="topbar__live"><span class="dot"></span>v2.0 — free</span>
     </div>
   </div>
 </header>
@@ -41,8 +41,8 @@
   <div class="wrap">
     <div class="hero__meta">
       <div class="cell"><span class="mono">Index</span><span class="v">KA-101 / ScoreSifter</span></div>
-      <div class="cell"><span class="mono">Platform</span><span class="v">macOS · Windows · Linux</span></div>
-      <div class="cell"><span class="mono">Catalogue</span><span class="v">43,217 works</span></div>
+      <div class="cell"><span class="mono">Platform</span><span class="v">macOS 14+ · Apple silicon &amp; Intel</span></div>
+      <div class="cell"><span class="mono">Catalogue</span><span class="v">54,207 pieces</span></div>
       <div class="cell"><span class="mono">Price</span><span class="v">Free, forever</span></div>
     </div>
   </div>
@@ -53,7 +53,7 @@
           Your sheet music library, <span class="accent">finally organised.</span>
         </h1>
         <p class="hero__lede">
-          Point ScoreSifter at a folder of messy PDFs. It reads the filenames, matches them against a <strong>43k-work catalogue</strong>, and renames everything to a clean, consistent format — with metadata written into every file. Offline, reviewable, reversible.
+          Point ScoreSifter at a folder of messy PDFs. It reads the filenames, matches them against a <strong>54k-piece catalogue</strong>, reads page one when a filename says nothing, and renames everything to a clean, consistent format — with metadata written into every file. Offline, reviewable, reversible.
         </p>
         <div class="hero__cta">
           <a href="#download" class="btn btn--accent">Download — free <span class="arr">↓</span></a>
@@ -63,38 +63,38 @@
 
       <div class="rename-demo" aria-label="Example rename">
         <div class="rd__head">
-          <span>Folder: ~/Music/Scores · 6 of 218</span>
+          <span>Folder: Sheet Music · 6 of 38</span>
           <span class="ok">Matched</span>
         </div>
         <div class="rd__rows">
           <div class="rd__row">
-            <span class="rd__from">IMSLP123456-PMLP_Schubert_Die_Forelle_CamelCase.pdf</span>
+            <span class="rd__from">A Chloris - Hahn.pdf</span>
             <span class="rd__arrow">→</span>
-            <span class="rd__to">Die Forelle – Schubert – [D].pdf</span>
+            <span class="rd__to">À Chloris – Reynaldo Hahn.pdf</span>
           </div>
           <div class="rd__row">
-            <span class="rd__from">puccini o mio babbino caro (2).pdf</span>
+            <span class="rd__from">auf dem wasser zu singen.pdf</span>
             <span class="rd__arrow">→</span>
-            <span class="rd__to">O mio babbino caro – Puccini – [A♭].pdf</span>
+            <span class="rd__to">Auf dem Wasser zu singen – Franz Schubert (D.774).pdf</span>
           </div>
           <div class="rd__row">
-            <span class="rd__from">03 - SchumannRobert - Widmung copy.pdf</span>
+            <span class="rd__from">Bell Song - Lakme.pdf</span>
             <span class="rd__arrow">→</span>
-            <span class="rd__to">Widmung – Schumann – [A♭].pdf</span>
+            <span class="rd__to">Bell Song – Léo Delibes (Lakmé).pdf</span>
           </div>
           <div class="rd__row">
-            <span class="rd__from">Fauré-Après_un_rêve-Op07No1.pdf</span>
+            <span class="rd__from">caro mio ben - giordani (low).pdf</span>
             <span class="rd__arrow">→</span>
-            <span class="rd__to">Après un rêve – Fauré – [c].pdf</span>
+            <span class="rd__to">Caro mio ben – Tommaso Giordani [low].pdf</span>
           </div>
           <div class="rd__row">
-            <span class="rd__from">mahler_ich_bin_der_welt_abhanden.pdf</span>
+            <span class="rd__from">Dalla sua pace.pdf</span>
             <span class="rd__arrow">→</span>
-            <span class="rd__to">Ich bin der Welt abhanden gekommen – Mahler – [F].pdf</span>
+            <span class="rd__to">Dalla sua pace – Wolfgang Amadeus Mozart (Don Giovanni).pdf</span>
           </div>
         </div>
         <div class="rd__footer">
-          <span>218 files · 212 matched · 6 pending</span>
+          <span>38 files · 20 matched · 18 to review</span>
           <span>Preview only — nothing renamed yet</span>
         </div>
       </div>
@@ -118,7 +118,7 @@
     <div class="big-stat__grid">
       <p class="stat__lede">A local-first database of art song, opera arias, lieder and musical theatre — embedded in the app. No network call. No account. No sync.</p>
       <div>
-        <div class="stat__v">43k<span class="unit">works</span></div>
+        <div class="stat__v">54k<span class="unit">pieces</span></div>
         <div class="stat__k">Local catalogue</div>
       </div>
       <div>
@@ -162,23 +162,23 @@
       </article>
       <article class="feature">
         <span class="feature__no">04</span>
-        <h3 class="feature__title">Smart cleanup</h3>
-        <p class="feature__body">Strips IMSLP noise, library codes, CamelCase, duplicate suffixes. Handles accents and unicode properly.</p>
+        <h3 class="feature__title">Reads the page</h3>
+        <p class="feature__body">When a filename says nothing (Scan_047.pdf), ScoreSifter reads the title and composer from page one, scans included. It still cleans up IMSLP noise, shop codes and duplicate suffixes.</p>
       </article>
       <article class="feature">
         <span class="feature__no">05</span>
-        <h3 class="feature__title">43k-work catalogue</h3>
+        <h3 class="feature__title">54k-piece catalogue</h3>
         <p class="feature__body">Art song, opera arias, lieder and musical theatre — embedded in the app. No internet required for the vast majority of lookups.</p>
       </article>
       <article class="feature">
         <span class="feature__no">06</span>
-        <h3 class="feature__title">MusicBrainz fallback</h3>
-        <p class="feature__body">When the local catalogue doesn't have a match, optionally query MusicBrainz. You decide whether to accept each result.</p>
+        <h3 class="feature__title">Online when it helps</h3>
+        <p class="feature__body">When the catalogue doesn't know a piece, ScoreSifter asks MusicBrainz and Open Opus, sending only the title and composer. You decide whether to accept each result.</p>
       </article>
       <article class="feature">
         <span class="feature__no">07</span>
         <h3 class="feature__title">Undo log</h3>
-        <p class="feature__body">Every rename run is logged with old → new pairs. Undo a whole batch, or pick out a single file. Nothing is permanent until you close the app.</p>
+        <p class="feature__body">Every rename run is logged with old → new pairs. Undo straight away, or later with Library ▸ Undo Last Renames, even after the app was closed.</p>
       </article>
       <article class="feature">
         <span class="feature__no">08</span>
@@ -194,18 +194,18 @@
     <div class="screenshots__grid">
       <div class="ss-frame">
         <div class="ss-frame__bar"><div class="dot-row"><span></span><span></span><span></span></div>ScoreSifter</div>
-        <img src="images/hero.png" alt="ScoreSifter main view — file list with rename proposals">
-        <div class="ss-frame__cap">To Review — proposed renames</div>
+        <img src="images/v2-list.png" alt="ScoreSifter after Auto-lookup: the file list with Match and Check states and the proposed names">
+        <div class="ss-frame__cap">After Auto-lookup — proposed names</div>
       </div>
       <div class="ss-frame">
         <div class="ss-frame__bar"><div class="dot-row"><span></span><span></span><span></span></div>ScoreSifter</div>
-        <img src="images/screen-variety.png" alt="ScoreSifter showing variety of matched files">
-        <div class="ss-frame__cap">High-confidence matches</div>
+        <img src="images/v2-inspector.png" alt="The inspector showing page one beside the title and composer">
+        <div class="ss-frame__cap">The inspector — page one beside the fields</div>
       </div>
       <div class="ss-frame">
         <div class="ss-frame__bar"><div class="dot-row"><span></span><span></span><span></span></div>ScoreSifter</div>
-        <img src="images/screen-results.png" alt="ScoreSifter Done tab — files ready to rename">
-        <div class="ss-frame__cap">Done — ready to commit</div>
+        <img src="images/v2-picker.png" alt="The picker offering three settings of Chanson triste">
+        <div class="ss-frame__cap">The picker — three composers, one title</div>
       </div>
     </div>
   </div>
@@ -227,25 +227,25 @@
         <span class="step__no">01</span>
         <h3 class="step__title">Point at a folder</h3>
         <p class="step__body">Drag in a directory of PDFs. ScoreSifter walks it, parses every filename, and extracts title, composer and key signals.</p>
-        <img src="images/step-scan.png" alt="ScoreSifter scanning a folder" class="step__img">
+        <img src="images/v2-scan.png" alt="A folder opened in ScoreSifter, every file not yet checked" class="step__img">
       </article>
       <article class="step">
         <span class="step__no">02</span>
         <h3 class="step__title">Match the catalogue</h3>
         <p class="step__body">Each file is checked against the embedded catalogue. High-confidence matches are flagged; anything uncertain is queued for your review.</p>
-        <img src="images/step-lookup.png" alt="Auto-lookup in progress" class="step__img">
+        <img src="images/v2-list.png" alt="The list after Auto-lookup" class="step__img">
       </article>
       <article class="step">
         <span class="step__no">03</span>
         <h3 class="step__title">Review and edit</h3>
         <p class="step__body">Every proposed rename shows old vs new. Edit any field, override the template, skip individual files. Nothing changes until you say so.</p>
-        <img src="images/screen-variety.png" alt="Reviewing proposed renames" class="step__img">
+        <img src="images/v2-picker.png" alt="Reviewing a file in the picker" class="step__img">
       </article>
       <article class="step">
         <span class="step__no">04</span>
         <h3 class="step__title">Commit</h3>
-        <p class="step__body">ScoreSifter renames the files and writes metadata into every PDF. Done tab shows what changed. Undo is available as long as the app is open.</p>
-        <img src="images/step-done.png" alt="Done tab — files renamed" class="step__img">
+        <p class="step__body">ScoreSifter renames the approved files and writes metadata into every PDF, adding to the end of the file so nothing in it is lost. Undo puts the old names back, straight away or later.</p>
+        <img src="images/v2-results.png" alt="The results: files renamed, with Undo" class="step__img">
       </article>
     </div>
   </div>
@@ -257,26 +257,26 @@
       <div class="section__no">§ 03 &nbsp; Templates</div>
       <div>
         <h2 class="section__title">Built-in presets. <span class="accent">Make your own.</span></h2>
-        <p class="section__lede">Five ready-to-go patterns. Or write your own with optional segments and fallbacks.</p>
+        <p class="section__lede">A sensible default and ready-to-go patterns. Or write your own with optional segments. A key goes in the name only when your filename states it.</p>
       </div>
     </header>
   </div>
   <div class="wrap">
     <div class="templates">
       <article class="tpl">
-        <span class="tpl__name">Recital Atlas (default)</span>
-        <div class="tpl__pattern">{title} – {composer} – [{key}]</div>
-        <div class="tpl__eg">→ Die Forelle – Schubert – [D].pdf</div>
+        <span class="tpl__name">Default</span>
+        <div class="tpl__pattern">{title}[? – {composer}?][? ({work})?][? – [{key}]?]</div>
+        <div class="tpl__eg">→ Auf dem Wasser zu singen – Franz Schubert (D.774).pdf</div>
       </article>
       <article class="tpl">
-        <span class="tpl__name">With work</span>
+        <span class="tpl__name">Recital Atlas · With work</span>
         <div class="tpl__pattern">{title} – {composer}[? ({work})?] – [{key}]</div>
-        <div class="tpl__eg">→ Dido's Lament – Purcell (Dido and Aeneas) – [g].pdf</div>
+        <div class="tpl__eg">→ Dido's Lament – Henry Purcell (Dido and Aeneas) – [g].pdf</div>
       </article>
       <article class="tpl">
         <span class="tpl__name">Composer first</span>
         <div class="tpl__pattern">{composer} – {title} – [{key}]</div>
-        <div class="tpl__eg">→ Schumann – Widmung – [A♭].pdf</div>
+        <div class="tpl__eg">→ Robert Schumann – Widmung – [A♭].pdf</div>
       </article>
       <article class="tpl">
         <span class="tpl__name">Minimal</span>
@@ -314,24 +314,38 @@
         <p>Recital Atlas, AriaDesk and Vocemetry fund the studio.</p>
       </div>
       <div class="price__card">
-        <span class="tag">● Available now · v1.1</span>
+        <span class="tag">● Available now · v2.0</span>
         <div class="num">$0<small>one-time</small></div>
         <div class="note">Forever. No account. No catch.</div>
         <ul>
-          <li>macOS universal — Apple Silicon + Intel</li>
-          <li>Windows 10 / 11 x64</li>
-          <li>Linux AppImage (Ubuntu, Fedora tested)</li>
-          <li>43k-work catalogue embedded</li>
-          <li>Updates for the life of the app</li>
+          <li>macOS 14 Sonoma or later</li>
+          <li>Apple silicon and Intel Macs (tested on Apple silicon)</li>
+          <li>54k-piece catalogue built in</li>
+          <li>Updates itself — it asks first</li>
+          <li>Optional: page reading with Apple Intelligence (macOS 26, on Macs that have it)</li>
         </ul>
-        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-          <a href="https://github.com/7gill/ScoreSifter/releases/download/v1.1.0/ScoreSifter_1.1.0_aarch64.dmg" class="btn btn--accent">Download — macOS <span class="arr">↓</span></a>
-          <a href="https://github.com/7gill/ScoreSifter/releases/download/v1.1.0/ScoreSifter_1.1.0_x64-setup.exe" class="btn btn--ghost">Windows <span class="arr">↓</span></a>
-          <a href="https://github.com/7gill/ScoreSifter/releases/download/v1.1.0/ScoreSifter_1.1.0_amd64.AppImage" class="btn btn--ghost">Linux AppImage <span class="arr">↓</span></a>
-          <a href="https://github.com/7gill/ScoreSifter/releases/download/v1.1.0/ScoreSifter_1.1.0_amd64.deb" class="btn btn--ghost">Linux .deb <span class="arr">↓</span></a>
-        </div>
-        <p style="margin-top:12px;font-size:12.5px;color:var(--ink-3);line-height:1.5">macOS: signed and notarized — opens without any security warnings.</p>
-        <p style="margin-top:6px;font-size:12.5px;color:var(--ink-3);line-height:1.5">Windows users: SmartScreen may show a security warning — click <strong style="color:var(--ink-2)">More info → Run anyway</strong> to proceed. This is normal for indie apps distributed outside the Microsoft Store.</p>
+        <form id="get" class="get" action="https://buttondown.com/api/emails/embed-subscribe/kairovo" method="post" target="bd-frame"
+          style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+          <label for="get-email" style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Your email</label>
+          <input id="get-email" type="email" name="email" placeholder="your@email.com" required autocomplete="email"
+            style="font:inherit;font-size:14px;padding:11px 14px;border:1px solid var(--rule-soft);background:var(--paper-2);color:var(--ink);border-radius:0;width:100%;box-sizing:border-box">
+          <input type="hidden" name="tag" value="score-sifter">
+          <input type="hidden" name="embed" value="1">
+          <button type="submit" class="btn btn--accent">Download for Mac <span class="arr">↓</span></button>
+        </form>
+        <iframe name="bd-frame" title="Email sign-up" hidden></iframe>
+        <p style="margin-top:12px;font-size:12.5px;color:var(--ink-3);line-height:1.5">The download starts straight away. We'll email you once to ask if you'd like occasional news of ScoreSifter and the other Kairovo apps; if you don't confirm, you're not added. <a href="privacy.html">Privacy</a></p>
+        <p style="margin-top:6px;font-size:12.5px;color:var(--ink-3);line-height:1.5">Signed and notarised by Apple — opens without a security warning.</p>
+        <script>
+          // The address goes to Buttondown (in the hidden frame); the file is
+          // public either way — the form is a request, not a lock.
+          (function () {
+            var DMG = "https://downloads.scoresifter.com/ScoreSifter-2.0.0.dmg";
+            document.getElementById("get").addEventListener("submit", function () {
+              setTimeout(function () { window.location.href = DMG; }, 400);
+            });
+          })();
+        </script>
       </div>
     </div>
   </div>
@@ -346,15 +360,15 @@
     <div class="faq">
       <details open>
         <summary><span class="q-no">Q.01</span><span>Does it change my files before I say so?</span><span class="q-plus">+</span></summary>
-        <div class="faq__body">No. Every run is preview-first. ScoreSifter shows the exact rename it proposes for every file. You review, edit, skip, and only then commit. Even after committing, the undo log lets you reverse the whole batch or individual files — as long as the app is still open.</div>
+        <div class="faq__body">No. Every run is preview-first. ScoreSifter shows the exact rename it proposes for every file. You review, edit, skip, and only then commit. Even after committing, Undo puts the old names back — straight away, or later with Library ▸ Undo Last Renames.</div>
       </details>
       <details>
-        <summary><span class="q-no">Q.02</span><span>Where does the 43k-work catalogue come from?</span><span class="q-plus">+</span></summary>
+        <summary><span class="q-no">Q.02</span><span>Where does the catalogue come from?</span><span class="q-plus">+</span></summary>
         <div class="faq__body">It's KairovoData — a hand-curated database built from public-domain reference sources (art song corpora, opera catalogues, MusicBrainz snapshots) and cross-checked against primary scores. It ships embedded in the app — no network needed.</div>
       </details>
       <details>
         <summary><span class="q-no">Q.03</span><span>My file isn't in the catalogue. What happens?</span><span class="q-plus">+</span></summary>
-        <div class="faq__body">ScoreSifter can optionally query MusicBrainz as a fallback. If there's still no match, you fill in the fields manually and the file gets renamed from your input, same as any other. Unverified matches are flagged so you can audit them later.</div>
+        <div class="faq__body">ScoreSifter reads page one for the title and composer, and asks MusicBrainz and Open Opus (sending only the title and composer). If there's still no match, you fill in the fields manually and the file gets renamed from your input, same as any other. Unverified matches are flagged so you can audit them later.</div>
       </details>
       <details>
         <summary><span class="q-no">Q.04</span><span>Does it work with forScore?</span><span class="q-plus">+</span></summary>
@@ -362,7 +376,7 @@
       </details>
       <details>
         <summary><span class="q-no">Q.05</span><span>What platforms are supported?</span><span class="q-plus">+</span></summary>
-        <div class="faq__body">macOS (universal — Apple Silicon and Intel), Windows 10/11 x64, and Linux AppImage. macOS has had the most testing; Windows and Linux are in active beta.</div>
+        <div class="faq__body">ScoreSifter 2 is a Mac app: macOS 14 Sonoma or later, on Apple silicon and Intel Macs (tested on Apple silicon). Reading page one with Apple Intelligence is optional and needs macOS 26 on a Mac that supports it.</div>
       </details>
       <details>
         <summary><span class="q-no">Q.06</span><span>Will it stay free?</span><span class="q-plus">+</span></summary>

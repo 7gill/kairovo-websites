@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it works · Score Sifter</title>
+<meta name="description" content="How Score Sifter reads, matches and renames your sheet music: the catalogue, the four answers, reading the page, what goes online, what is written into your PDFs, and the safety net.">
+<link rel="icon" href="images/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="images/icon-180.png">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the page</a>
+<header class="site-header">
+<nav class="wrap" aria-label="Main">
+<a class="brand" href="./"><img src="images/icon.svg" alt=""><b>Score Sifter</b><span>by Kairovo</span></a>
+<div class="nav-links">
+<a href="how-it-works.html" class="opt" aria-current="page">How it works</a>
+<a href="guide.html" class="opt">Guide</a>
+<a href="./#faq" class="opt">Questions</a>
+<a href="./#download" class="btn btn-accent">Get it free</a>
+</div>
+</nav>
+</header>
+
+<main id="main" class="doc narrow">
+<p class="eyebrow">Score Sifter 2.0 for Mac</p>
+<h1>How it works, in detail</h1>
+<p class="updated">What Score Sifter does with your scores, and what it never does.</p>
+
+<ol class="toc" aria-label="Contents">
+<li><a href="#catalogue"><span class="p-no">I.</span><span>The catalogue</span></a></li>
+<li><a href="#judging"><span class="p-no">II.</span><span>How a match is judged</span></a></li>
+<li><a href="#page"><span class="p-no">III.</span><span>Reading the page</span></a></li>
+<li><a href="#online"><span class="p-no">IV.</span><span>What goes online, and what doesn’t</span></a></li>
+<li><a href="#pdfs"><span class="p-no">V.</span><span>What is written into your PDFs</span></a></li>
+<li><a href="#safety"><span class="p-no">VI.</span><span>The safety net</span></a></li>
+</ol>
+
+<h2 id="catalogue">I. The catalogue</h2>
+<p>Inside the app is a catalogue of <strong>54,180 pieces by 1,124 composers</strong>, chosen for singers: art song, opera and operetta, musical theatre, sacred music and folk song. It knows each piece’s title, its composer and, where there is one, the work it belongs to (the opera, the song cycle, the opus number).</p>
+<p>It comes from Kairovo’s own music database, compiled from public reference sources and checked and corrected by hand. Most of the pieces (44,867) come from that database’s own lists; the rest from Wikipedia (2,344), the librettidopera.it opera libretti (2,320), MusicBrainz (1,620) and published opera catalogues (2,808). Beside the pieces it holds 7,104 alternative titles (translations, first lines, familiar names such as “Dido’s Lament”) and the names of 9,150 works, so a file can be recognised by any of them.</p>
+<p>The catalogue is part of the app. Checking a file against it needs no internet connection, and nothing about your files leaves your Mac to do it.</p>
+
+<h2 id="judging">II. How a match is judged</h2>
+<p>Score Sifter reads each filename into its parts (title, composer, work, key, and anything else you’ve written) and looks the title up. What it finds becomes one of four answers:</p>
+<ul>
+<li><strong>Match</strong> only when the catalogue has exactly one piece that fits: the same title, and the same composer when the filename names one. A Match is never a good guess or a high score. It is exact, or it isn’t a Match.</li>
+<li><strong>Choose</strong> when more than one piece fits equally well. Duparc, Tchaikovsky and Saint-Saëns all wrote a Chanson triste; Score Sifter won’t pick for you.</li>
+<li><strong>Check</strong> when the answer is likely but not certain: the title is one letter off, differs only by a small word such as “the”, was read from the page rather than the filename, or came from a lookup online. You look, then approve or correct it.</li>
+<li><strong>Nothing found</strong> when nothing fits well enough. The file keeps its name until you decide.</li>
+</ul>
+<p>Two rules hold everywhere. <strong>A key is never taken from the catalogue:</strong> most singers’ copies aren’t in the original key, so the key in a new name is always the one your filename gave. And <strong>nothing read from the page, and nothing found online, ever makes a Match on its own.</strong> At most it makes a Check, for you to look at.</p>
+
+<h2 id="page">III. Reading the page</h2>
+<p>When a filename says nothing useful (“Scan_047.pdf”), Score Sifter looks at page one of the score.</p>
+<ul>
+<li>If the PDF has text in it, Score Sifter reads that text. If page one is a scan, it uses <strong>Apple’s own text recognition</strong>, on your Mac, to read the printed words. Either way it looks for a composer’s name and a title it can find in the catalogue.</li>
+<li>Optionally, on a Mac with <strong>Apple Intelligence</strong>, Apple’s on-device model can read page one and suggest a title and composer when the filename gives nothing. It runs privately on your Mac; nothing is sent to Apple or to us. A suggestion the catalogue confirms becomes a Check; anything else is shown as a hint you can use or ignore. It needs macOS 26 on a Mac with Apple silicon, and it is switched on or off in Settings.</li>
+</ul>
+<p>Apple Intelligence is a small help, not the heart of the app: in our tests on more than 2,000 real scores, it found the right answer for a handful of files that nothing else could name. The filename and the catalogue do almost all the work.</p>
+
+<h2 id="online">IV. What goes online, and what doesn’t</h2>
+<p>Score Sifter goes online for one thing only: <strong>a piece the catalogue doesn’t know</strong>. Then it asks two public music databases, <strong>MusicBrainz</strong> and <strong>Open Opus</strong>, sending <strong>only the title and composer</strong> it is looking for, paced as MusicBrainz asks.</p>
+<ul>
+<li>Your files, their contents, your folder’s name and your library never leave your Mac.</li>
+<li>An answer found online is shown only when its composer is one the catalogue knows, and it is always a Check, never a Match.</li>
+<li>You can switch looking up online off in Settings. Then nothing is sent anywhere, and those files stay Nothing found.</li>
+<li>Without a connection, the files that would have gone online are marked “Not checked”, so you can look them up later.</li>
+</ul>
+<p>The app also checks downloads.scoresifter.com for a new version of itself, once a day if you allow it. It sends nothing about your Mac or your files. The full details are in the <a href="privacy.html">privacy policy</a>.</p>
+
+<h2 id="pdfs">V. What is written into your PDFs</h2>
+<p>Unless you switch it off, Score Sifter writes four things into each PDF it renames, in the places forScore and other readers look: the <strong>title</strong>, the <strong>composer</strong>, the <strong>key</strong> and your <strong>tags</strong>.</p>
+<ul>
+<li><strong>What’s kept:</strong> everything else. The publisher’s own details, the pages, your annotations: none of it is changed. The new details are added to the end of the file, so the original file is still there, byte for byte, at its start. Keywords the file already had are kept beside Score Sifter’s.</li>
+<li><strong>How:</strong> the new version is made beside the original, checked (the pages open, the details read back correctly), and only then swapped in. If anything is wrong, the original is left exactly as it was.</li>
+<li><strong>What’s left alone:</strong> a PDF that is encrypted or damaged is renamed but never written into, and the summary says so.</li>
+</ul>
+
+<h2 id="safety">VI. The safety net</h2>
+<ul>
+<li><strong>Nothing changes until you approve it.</strong> You see every proposed name first.</li>
+<li><strong>Never over another file.</strong> If a new name is already taken, Score Sifter adds “(2)”. It never replaces a file, and never deletes one.</li>
+<li><strong>Undo, even later.</strong> Every batch of renames is recorded before it happens. Edit ▸ Undo puts the names back straight away, and Library ▸ Undo Last Renames… does it after you’ve quit and reopened. It looks first, asks, and leaves alone any file that has changed since.</li>
+<li><strong>Only the folders you choose.</strong> Score Sifter runs in Apple’s app sandbox: it can only see the folders you give it, and nothing else on your Mac.</li>
+<li><strong>Tested hard.</strong> Before release it was run on a library of 10,200 scores: 3,091 files renamed and put back again, the app quit and even forced to stop part-way through, and not one file lost or damaged.</li>
+</ul>
+<p>Before renaming a large library for the first time, keep a copy of it anyway. It costs nothing and it is always wise.</p>
+
+<p style="margin-top:56px"><a href="guide.html">The guide</a> shows how to use each part of the app, step by step.</p>
+</main>
+
+<footer class="site-footer">
+<div class="wrap">
+<div><p><b>Score Sifter</b></p><p>Part of Kairovo: software built for the music room.</p></div>
+<nav aria-label="Footer">
+<a href="how-it-works.html" aria-current="page">How it works</a>
+<a href="guide.html">Guide</a>
+<a href="https://kairovo.com">Kairovo</a>
+<a href="privacy.html">Privacy</a>
+<a href="terms.html">Terms</a>
+<span>© 2026 Kairovo</span>
+</nav>
+</div>
+</footer>
+</body>
+</html>

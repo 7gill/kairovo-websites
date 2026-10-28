@@ -241,8 +241,6 @@ h1, h2, h3 { text-wrap: balance; }
 .doc .shot { margin-top: 24px; }
 
 /* kairovo.com only */
-.kmark { width: 32px; height: 32px; border-radius: 8px; background: #1A1A18; color: #F5F1E8; display: flex; align-items: center; justify-content: center;
-  font-family: var(--display); font-style: italic; font-size: 22px; line-height: 1; }
 .eyebrow.quiet { color: var(--ink-3); }
 .hero h1.studio { max-width: 860px; font-size: clamp(2.6rem, 6vw, 5rem); line-height: 1.02; }
 .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }

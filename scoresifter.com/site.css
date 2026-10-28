@@ -214,6 +214,8 @@ h1, h2, h3 { text-wrap: balance; }
 .site-footer b { color: var(--ink); font-weight: 600; }
 .site-footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; }
 .site-footer a { color: var(--ink-3); }
+.site-footer .studio { display: flex; align-items: center; gap: 12px; }
+.site-footer .studio img { display: block; }
 
 /* Long-form pages: the guide, privacy, terms */
 .doc { padding-top: 72px; }

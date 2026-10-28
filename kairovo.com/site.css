@@ -263,3 +263,7 @@ h1, h2, h3 { text-wrap: balance; }
 .letters > * { flex: 1 1 380px; min-width: 0; }
 .letters h2 { margin: 0; font-family: var(--display); font-weight: 500; font-size: 40px; line-height: 1.1; }
 .signup.dark button { background: var(--ink); color: #fff; }
+.principle .note { margin-top: 10px; font-family: var(--display); font-size: 19px; line-height: 1.6; }
+.principle .note p { margin: 0; color: var(--ink); }
+.principle .note p + p { margin-top: 14px; }
+.principle .note .signature { margin-top: 18px; font-style: italic; color: var(--ink-3); }

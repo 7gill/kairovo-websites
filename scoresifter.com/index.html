@@ -42,6 +42,7 @@
 </section>
 
 <section class="window-section wrap" aria-label="Score Sifter at work">
+<p class="try-label" id="try" aria-hidden="true"><span class="try-dot"></span><span>Try it: press <b id="try-name">Auto-lookup</b></span></p>
 <div class="mac-window">
 <div class="titlebar">
 <span class="light r" aria-hidden="true"></span><span class="light y" aria-hidden="true"></span><span class="light g" aria-hidden="true"></span>
@@ -62,10 +63,10 @@
 </div>
 <div class="list-pane">
 <div class="list-head">
-<div><p class="t">To Review</p><p class="s" id="status">8 files · not looked up yet</p></div>
+<div><p class="t">To Review</p><p class="s" id="status" role="status">8 files · not looked up yet</p></div>
 <button type="button" class="lookup-btn" id="lookup" aria-controls="rows">Auto-lookup</button>
 </div>
-<ul class="rows" id="rows" aria-live="polite"></ul>
+<ul class="rows" id="rows"></ul>
 </div>
 </div>
 </div>
@@ -275,7 +276,9 @@
 <script>
 // The interactive window: eight files from Score Sifter's demo library, with
 // the answers the app itself gave them (Auto-lookup, 2026-10-29). Nothing here
-// is invented; the button only switches between before and after.
+// is invented. The button plays the lookup file by file; the window plays it
+// once by itself when it scrolls into view. With reduced motion there is no
+// autoplay, no pulse, and the answers appear at once.
 (function () {
   var rows = [
     ["NESSUN DORMA.pdf", "Match", "Title Nessun dorma · Composer Giacomo Puccini · Work Turandot", "Nessun dorma – Giacomo Puccini (Turandot).pdf"],
@@ -291,31 +294,67 @@
     "Nothing found": ["m-nothing", "l-quiet"], "Not checked": ["m-notchecked", "l-quiet"] };
   var list = document.getElementById("rows"), button = document.getElementById("lookup"),
       status = document.getElementById("status"), caption = document.getElementById("caption");
-  var after = false;
+  var tryName = document.getElementById("try-name");
+  var still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var done = 0, running = false, pressed = false, timer = null;
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function draw() {
+    var after = done === rows.length;
     list.textContent = "";
     var counts = { notChecked: 0, match: 0, choose: 0, check: 0, nothing: 0 };
-    rows.forEach(function (r) {
-      var state = after ? r[1] : "Not checked";
+    rows.forEach(function (r, n) {
+      var looked = n < done, state = looked ? r[1] : "Not checked";
       counts[{ "Match": "match", "Choose": "choose", "Check": "check", "Nothing found": "nothing", "Not checked": "notChecked" }[state]]++;
-      var li = el("li", "row"), s = el("div", "state"), i = el("i", marks[state][0]), b = el("b", marks[state][1], state);
+      var li = el("li", "row" + (running && n === done - 1 ? " just" : "")), s = el("div", "state"), i = el("i", marks[state][0]), b = el("b", marks[state][1], state);
       i.setAttribute("aria-hidden", "true"); s.appendChild(i); s.appendChild(b);
       var names = el("div", "names");
       names.appendChild(el("p", "current", r[0]));
-      names.appendChild(el("p", "notes", after ? r[2] : "Not looked up yet"));
-      var shown = !after ? "—" : (state === "Choose" ? "Pick one: nothing is renamed until you do" : (state === "Nothing found" ? "Keeps its name until you decide" : r[3]));
-      names.appendChild(el("p", "proposed" + ((!after || state === "Choose" || state === "Nothing found") ? " none" : ""), shown));
+      names.appendChild(el("p", "notes", looked ? r[2] : (running && n === done ? "Looking up…" : "Not looked up yet")));
+      var shown = !looked ? "—" : (state === "Choose" ? "Pick one: nothing is renamed until you do" : (state === "Nothing found" ? "Keeps its name until you decide" : r[3]));
+      names.appendChild(el("p", "proposed" + ((!looked || state === "Choose" || state === "Nothing found") ? " none" : ""), shown));
       li.appendChild(s); li.appendChild(names); list.appendChild(li);
     });
     Object.keys(counts).forEach(function (k) { var c = document.querySelector('[data-count="' + k + '"]'); if (c) c.textContent = counts[k]; });
-    status.textContent = after ? "8 files looked up · 5 Match · 3 for you to look at" : "8 files · not looked up yet";
-    button.textContent = after ? "Show the folder as it was" : "Auto-lookup";
-    button.className = after ? "lookup-btn again" : "lookup-btn";
+    status.textContent = after ? "8 files looked up · 5 Match · 3 for you to look at"
+                       : (running ? "Looking up " + (done + 1) + " of 8…" : "8 files · not looked up yet");
+    var label = after ? "Run it again" : (running ? "Looking up…" : "Auto-lookup");
+    button.textContent = label;
+    button.setAttribute("aria-disabled", running ? "true" : "false");
+    button.className = "lookup-btn" + (after ? " again" : "") + (running ? " busy" : "") + (!pressed && !running ? " pulse" : "");
+    if (!running) tryName.textContent = label;
     caption.textContent = after ? "These are Score Sifter’s own answers for these files. In the app, nothing is renamed until you approve it."
                                 : "Press Auto-lookup to see a messy folder tidied up. In the app, nothing is renamed until you approve it.";
   }
-  button.addEventListener("click", function () { after = !after; draw(); });
+  // One file at a time, at about the pace the app shows them; at once with reduced motion.
+  function run() {
+    if (running) return;
+    clearTimeout(timer);
+    done = 0;
+    if (still.matches) { done = rows.length; draw(); return; }
+    running = true; draw();
+    (function next() {
+      timer = setTimeout(function () {
+        done++;
+        if (done === rows.length) running = false;
+        draw();
+        if (running) next();
+      }, 550);
+    })();
+  }
+  button.addEventListener("click", function () {
+    if (running) return;
+    pressed = true;
+    run();
+  });
+  // Plays once by itself the first time the window is mostly in view.
+  if ("IntersectionObserver" in window && !still.matches) {
+    var seen = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      seen.disconnect();
+      setTimeout(function () { if (!pressed && done === 0) run(); }, 600);
+    }, { threshold: 0.6 });
+    seen.observe(document.querySelector(".mac-window"));
+  }
   draw();
 })();
 

@@ -346,14 +346,16 @@
     pressed = true;
     run();
   });
-  // Plays once by itself the first time the window is mostly in view.
+  // Plays once by itself the first time the window's header (the button) is
+  // fully in the top four-fifths of the screen: the whole window is taller than
+  // a phone's screen, so it can never be mostly in view there.
   if ("IntersectionObserver" in window && !still.matches) {
     var seen = new IntersectionObserver(function (entries) {
       if (!entries[0].isIntersecting) return;
       seen.disconnect();
       setTimeout(function () { if (!pressed && done === 0) run(); }, 600);
-    }, { threshold: 0.6 });
-    seen.observe(document.querySelector(".mac-window"));
+    }, { threshold: 1, rootMargin: "0px 0px -20% 0px" });
+    seen.observe(document.querySelector(".list-head"));
   }
   draw();
 })();

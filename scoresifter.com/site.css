@@ -109,8 +109,30 @@ h1, h2, h3 { text-wrap: balance; }
 .list-head .t { font-size: 22px; font-weight: 600; }
 .list-head .s { font-size: 13px; color: var(--ink-3); }
 .lookup-btn { font: inherit; font-size: 14px; font-weight: 500; padding: 10px 18px; min-height: 44px; border-radius: 8px;
-  border: 0; background: var(--accent); color: #FFFFFF; cursor: pointer; }
+  border: 0; background: var(--accent); color: #FFFFFF; cursor: pointer;
+  transition: background-color 0.15s, transform 0.1s; }
+.lookup-btn:hover { background: var(--accent-ink); }
+.lookup-btn:active { background: var(--accent-deep); transform: scale(0.97); }
 .lookup-btn.again { background: #FFFFFF; color: var(--ink); border: 1px solid var(--rule-strong); }
+.lookup-btn.again:hover { background: #F2F5F3; border-color: var(--accent); }
+.lookup-btn.again:active { background: #E3ECE6; }
+.lookup-btn.busy { cursor: progress; background: var(--accent-ink); transform: none; }
+/* A gentle ring until the visitor first presses it. */
+.lookup-btn.pulse { animation: lookup-ring 2.2s ease-out infinite; }
+@keyframes lookup-ring {
+  0% { box-shadow: 0 0 0 0 rgba(63, 122, 84, 0.45); }
+  70%, 100% { box-shadow: 0 0 0 12px rgba(63, 122, 84, 0); }
+}
+.row.just { animation: row-settle 0.35s ease-out; }
+@keyframes row-settle { from { background: #EEF5F0; } to { background: transparent; } }
+.try-label { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 0 14px;
+  font-size: 14px; font-weight: 600; color: var(--accent-ink); }
+.try-label b { font-weight: 700; }
+.try-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+@media (prefers-reduced-motion: reduce) {
+  .lookup-btn, .lookup-btn.pulse, .row.just { animation: none; transition: none; }
+  .lookup-btn:active { transform: none; }
+}
 .rows { list-style: none; margin: 0; padding: 0; }
 .row { display: flex; flex-wrap: wrap; gap: 6px 20px; padding: 14px 0; border-bottom: 1px solid #F0F0F2; }
 .row:last-child { border-bottom: 0; }

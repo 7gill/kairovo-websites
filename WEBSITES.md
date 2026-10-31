@@ -1,7 +1,8 @@
 # Kairovo — Websites
 
 Operational reference for all Kairovo marketing sites.
-Last updated: 2026-04-24
+Last updated: 2026-11-01 (the live 2026 sites). The April 2026 version is
+in git history.
 
 ---
 
@@ -9,128 +10,113 @@ Last updated: 2026-04-24
 
 ```
 kairovo-websites/
-  design-system/        — shared CSS and component files (see BRANDING.md)
-    tokens.css          — Kairovo v1 design system tokens (--k-*, --ss-*, --ra-*, etc.)
-    kairovo-system.css  — v2 design system (hairline Swiss direction)
-    components.css      — shared Kairovo v1 components
-    kit-pages.css       — kit page layout styles
-    app-icon.jsx        — React component for app icons (used in kit pages)
-    kairovo-logo.svg    — Kairovo K mark SVG
+  kairovo.com/          — studio homepage (LIVE): index, privacy, terms, site.css, images/
+  scoresifter.com/      — Score Sifter site (LIVE): index, how-it-works, guide,
+                          privacy, terms, site.css, images/ (screenshots, demo.mp4, icons)
+  recitalatlas.com/     — one-page placeholder
+  ariadesk.com/         — one-page placeholder
+  vocemetry.com/        — one-page placeholder
 
-  kairovo.com/          — Studio homepage (blank — needs rebuilding in v2)
-  recitalatlas.com/     — Recital Atlas marketing site (blank — needs rebuilding)
-  scoresifter.com/      — ScoreSifter marketing site (blank — needs rebuilding)
-  ariadesk.com/         — AriaDesk site (blank — build when app is ready)
-  vocemetry/            — Vocemetry site (blank — build when app is ready)
-
+  design-system/        — shared CSS from the April v2 system (tokens.css,
+                          kairovo-system.css, components.css, kit-pages.css,
+                          scoresifter.css, app-icon.jsx); the placeholders
+                          load kairovo-system.css from jsDelivr (@main)
   WEBSITES.md           — this file
   BRANDING.md           — design system and brand decisions
+  STATUS.md             — where things stand (updated every session)
 ```
 
 ---
 
 ## Site status
 
-| Site | Domain | Status | Priority |
-|---|---|---|---|
-| kairovo.com | kairovo.com | Needs rebuild in v2 | Medium |
-| recitalatlas.com | recitalatlas.com | Needs rebuild in v2 | High — launching soon |
-| scoresifter.com | scoresifter.com | Needs rebuild in v2 | High — beta imminent |
-| ariadesk.com | ariadesk.com | Blank — build when app ready | Low |
-| vocemetry | TBD | Blank — build when app ready | Low |
+| Site | Status |
+|---|---|
+| scoresifter.com | **Live** since the soft launch (2026-10-30): Score Sifter 2.0, free, Mac only. Email-gated download, how it works, guide, interactive demo (autoplays on phones too), privacy and terms |
+| kairovo.com | **Live**, rebuilt 2026-10-30: the studio homepage, app cards (Score Sifter "FREE · MAC"), privacy and terms (wording approved 2026-10-29) |
+| recitalatlas.com | Placeholder (2026-04-29); full site when the app is ready |
+| ariadesk.com | Placeholder; waitlist page when the app is ready |
+| vocemetry.com | Placeholder; build when the app is ready |
 
 ---
 
 ## Technology
 
-All sites are static HTML — no framework, no build step, no npm.
-- HTML + CSS + vanilla JS only
-- Shared design system CSS loaded from `../design-system/`
-- App icons rendered via `app-icon.jsx` (React, loaded via CDN for kit pages only)
-- No CMS, no database, no server-side rendering
-
-This keeps deployment trivial and the sites fast.
+All sites are static HTML. There's no framework, no build step and no npm.
+- HTML, CSS and vanilla JS only.
+- The live sites each carry their own `site.css`. The placeholders load
+  `design-system/kairovo-system.css` through jsDelivr.
+- No CMS, no database, no server. The one outside service is the
+  Buttondown signup form on scoresifter.com (below).
 
 ---
 
 ## Design direction
 
-All sites use the **v2 design system** (kairovo-system.css):
-- Font stack: Inter Tight (display) + JetBrains Mono (labels/code)
-- Warm paper background: `#F4F0E6`
-- Hairline borders, zero border radius
-- Per-app accent colour via `data-app` attribute on `<html>`
-- See BRANDING.md for full colour and typography decisions
-
-Reference files from Claude Design session (April 2026):
-- `Kairovo v2.html` — studio homepage mockup
-- `Site - Recital Atlas.html` — RA site mockup
-- `Site - ScoreSifter.html` — ScoreSifter site mockup (rename demo widget)
-- `Site - AriaDesk.html` — AriaDesk site mockup
-- `Site - Vocemetry.html` — Vocemetry site mockup
-
-These are reference/inspiration only — text is placeholder and colours
-need updating to the settled palette (see BRANDING.md). Use them as
-structural and layout reference when building the real pages.
+See BRANDING.md for colour and typography.
+- **The Kairovo mark** (Derek 2026-10-29): an EB Garamond Italic "K" on
+  the bronze triangle. It's the logo and favicon on kairovo.com, and it
+  sits beside "Part of Kairovo" in every scoresifter.com footer. The old K
+  is gone.
+- Both live sites carry the full icon set on every page, plus a real
+  `/favicon.ico` (16, 32 and 48 px) and apple-touch icons.
+- Copy rules: plain, calm, no exclamation marks (BRANDING.md).
 
 ---
 
-## Key pages per site
+## Score Sifter's download and email list
 
-### kairovo.com
-- Home — studio intro, four app cards, tagline
-- Privacy policy
-
-### recitalatlas.com
-- Home — hero, features, screenshots, pricing/download
-- Docs / guide
-- Download
-- Privacy policy
-
-### scoresifter.com
-- Home — rename demo widget hero, how it works, download
-- Guide
-- Privacy policy
-
-### ariadesk.com / vocemetry
-- Single page to start — hero + waitlist/notify when ready
+- **The download** is `https://downloads.scoresifter.com/ScoreSifter.dmg`,
+  and it's always the newest version. It saves as
+  `ScoreSifter-<version>.dmg`. The page says "the latest version" and
+  names no number, so it needs no edit when a release ships.
+- **The files** live in the Cloudflare R2 bucket `scoresifter-downloads`,
+  on `downloads.scoresifter.com`. The bucket holds the versioned DMGs,
+  `ScoreSifter.dmg` and the Sparkle update feed `appcast.xml`. They're
+  served `cache-control: no-cache` (Cloudflare's Browser Cache TTL is set
+  to "Respect Existing Headers").
+- **Uploading** is not done from this repo. It's ScoreSifterMac's
+  `scripts/publish.sh`, run only on Derek's go after `scripts/release.sh`.
+  It uploads the DMG, then the same DMG as `ScoreSifter.dmg`, then the
+  feed, and downloads each one again to compare it byte for byte (wrangler
+  4.151.0, after Derek's `wrangler login`). The steps are in
+  ScoreSifterMac's `docs/RELEASE_CHECKLIST.md`.
+- **The email gate:** the form posts to Buttondown
+  (`buttondown.com/api/emails/embed-subscribe/kairovo`). That's **one list
+  shared by all Kairovo apps**. The download starts straight away, and
+  Buttondown sends one confirmation email (double opt-in). Only an email
+  address is asked for. The gate is a request, not a lock: the download
+  link itself is public.
 
 ---
 
 ## Deployment — Cloudflare Pages
 
-Each site deploys from this repo via Cloudflare Pages with a subfolder
-build configuration. Setup (when ready to deploy):
-
-1. Go to Cloudflare Dashboard → Pages → Create a project
-2. Connect to GitHub → select `7gill/kairovo-websites`
-3. Set build configuration:
-   - Build command: (none — static files)
-   - Build output directory: `recitalatlas.com` (or whichever site)
-   - Root directory: `/` (repo root)
-4. Add custom domain
-5. Deploy
-
-Repeat for each site as a separate Cloudflare Pages project.
-
-**Current deployment status:**
-- recitalatlas.com — deployed via Cloudflare (old version, needs update)
-- scoresifter.com — not yet deployed
-- kairovo.com — not yet deployed
+- The sites **deploy automatically from `main`** of `7gill/kairovo-websites`
+  through Cloudflare Pages (Git-connected). Every branch gets a preview,
+  e.g. `https://<branch>.scoresifter.pages.dev`.
+- **`main` is what's live.** Every website change stays on a branch until
+  Derek approves it:
+  1. Branch and commit as "draft for Derek, not main".
+  2. Preview from the branch's Pages address, or from a worktree on the
+     scratch drive (`"/Volumes/1TB Music/scratch/kairovo-websites-preview/<branch>"`).
+  3. Merge to `main` and push once Derek has seen it.
+- Docs at the repo root (this file, BRANDING.md, STATUS.md) aren't part of
+  any site's output.
 
 ---
 
 ## Domain registration
 
-All domains registered and managed separately.
-Check registrar for renewal dates.
+All domains are registered and managed separately. scoresifter.com's DNS
+is in Cloudflare. Check the registrar for renewal dates.
 
 ---
 
 ## What to build next
 
-Priority order:
-1. **scoresifter.com** — beta releasing soon, site needed for download link
-2. **recitalatlas.com** — launching soon, existing site needs v2 rebuild
-3. **kairovo.com** — studio homepage, lower urgency
-4. **ariadesk.com / vocemetry** — when apps are ready
+1. **recitalatlas.com**: the full site when Recital Atlas is ready (Mac
+   App Store).
+2. **ariadesk.com**: a waitlist page, to test prices with teachers (Aria
+   Desk's CONTEXT.md, "Open").
+3. **vocemetry.com**: when the iPhone app is ready.

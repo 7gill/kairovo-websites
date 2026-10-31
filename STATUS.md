@@ -2,8 +2,7 @@
 
 _Updated 2026-11-01. Taken from the git log, the branches and worktrees,
 and "Where things stand" in ScoreSifterMac's `docs/SWIFT_PORT_PLAN.md`.
-`WEBSITES.md` is out of date: it was last updated 2026-04-24 and still
-says "not yet deployed". Trust this file and the git log over it. Update
+`WEBSITES.md` (updated 2026-11-01) is the operational reference. Update
 this file at the end of every session._
 
 ## Live
@@ -31,7 +30,6 @@ this file at the end of every session._
 ## Queued
 - recitalatlas.com, ariadesk.com and the Vocemetry site: built when each
   app is ready.
-- `WEBSITES.md` needs bringing up to date (site status, deployment).
 
 ## Know first
 - How a change goes in: draft on a branch, previewed from a worktree on

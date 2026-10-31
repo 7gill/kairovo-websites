@@ -243,7 +243,7 @@
 </div>
 <div>
 <h3>Signed by Apple</h3>
-<p>Version 2.0.0, notarised by Apple: it opens without a warning, and offers its own updates. <a href="guide">Read the guide</a></p>
+<p>Version 2.0.2, notarised by Apple: it opens without a warning, and offers its own updates. <a href="guide">Read the guide</a></p>
 </div>
 </div>
 </div>
@@ -365,8 +365,10 @@
 // The download box: Buttondown's answer opens in a new tab (it may ask for a
 // CAPTCHA or a corrected address, so it is never hidden); this tab starts the
 // download. The file is public either way: the form is a request, not a lock.
+// ScoreSifter.dmg is always the newest version (ScoreSifterMac's publish.sh
+// replaces it each release); it saves as ScoreSifter-<version>.dmg.
 (function () {
-  var DMG = "https://downloads.scoresifter.com/ScoreSifter-2.0.0.dmg";
+  var DMG = "https://downloads.scoresifter.com/ScoreSifter.dmg";
   document.getElementById("get").addEventListener("submit", function () {
     setTimeout(function () { window.location.href = DMG; }, 400);
   });
